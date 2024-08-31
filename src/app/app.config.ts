@@ -1,11 +1,23 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, RouteReuseStrategy } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { IonicModule } from '@ionic/angular';
+import { PrimeNGConfig } from 'primeng/api';
+
+
+const initializePrimeNGConfig = (primeConfig: PrimeNGConfig) => () => {
+    primeConfig.ripple = true;
+};
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializePrimeNGConfig,
+            deps: [PrimeNGConfig],
+            multi: true,
+        },
         {
             provide: RouteReuseStrategy,
             useClass: IonicRouteStrategy
@@ -13,5 +25,5 @@ export const appConfig: ApplicationConfig = {
         provideRouter(appRoutes),
         provideIonicAngular(),
         importProvidersFrom(IonicModule.forRoot({})),
-    ]
+    ],
 };

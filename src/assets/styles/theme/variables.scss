@@ -1,0 +1,14 @@
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+
+:root {
+    --dark-green: #254336;
+    --yellow: #FAC653;
+    --light-green: #B4DFC4;
+    --light-gray: #EDEDED;
+
+
+    // style overrides for primeng
+    --secondary-color: var(var(--yellow)) !important;
+    --secondary-color-text: #000 !important;
+}
