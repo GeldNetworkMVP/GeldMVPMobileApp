@@ -1,0 +1,33 @@
+@if (!routerLink()) {
+<button
+  (click)="onClick($event)"
+  class="app-button"
+  [ngClass]="{
+    'app-button--sm': size() === 'sm',
+    'app-button--md': size() === 'md',
+    'app-button--lg': size() === 'lg',
+    'app-button--block': block(),
+    'app-button--black': color() === 'black',
+    'app-button--yellow': color() === 'yellow',
+}"
+  pRipple
+>
+  <ng-content></ng-content>
+</button>
+} @else {
+<a
+  [routerLink]="routerLink()"
+  class="app-button"
+  [ngClass]="{
+    'app-button--sm': size() === 'sm',
+    'app-button--md': size() === 'md',
+    'app-button--lg': size() === 'lg',
+    'app-button--block': block(),
+    'app-button--black': color() === 'black',
+    'app-button--yellow': color() === 'yellow',
+}"
+  pRipple
+>
+  <ng-content></ng-content>
+</a>
+}

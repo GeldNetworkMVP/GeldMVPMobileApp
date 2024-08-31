@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
 
 @Component({
@@ -6,7 +6,7 @@ import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonRouterOutlet, IonApp]
+  imports: [IonRouterOutlet, IonApp],
 })
 export class AppComponent {
   constructor() {}
