@@ -1,7 +1,8 @@
 import { Routes } from "@angular/router";
 import { informationalRoutes } from "@informational/informational.routes";
+import {homeRoutes} from '@home/home.routes'
 
 export const appRoutes: Routes = [
-    { path: 'home', loadComponent: () => import('@home/home.page').then(m => m.HomePage) },
+    ...homeRoutes,
     ...informationalRoutes
 ];
