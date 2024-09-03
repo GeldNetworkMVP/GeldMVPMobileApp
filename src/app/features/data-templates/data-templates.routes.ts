@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { provideStates } from '@ngxs/store';
-import { NewDataTemplateState } from './stores/new-data-template-store/new-data-tamplate.state';
+import { NewDataTemplateState } from './stores/new-data-template-store/new-data-template.state';
 
 export const dataTemplatesRoutes: Routes = [
   {
@@ -35,6 +35,13 @@ export const dataTemplatesRoutes: Routes = [
               import(
                 '@data-templates/pages/view-data-templates/view-data-templates.page'
               ).then((m) => m.ViewDataTemplatesPage),
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import(
+                '@data-templates/pages/view-selected-data-template/view-selected-data-template.page'
+              ).then((m) => m.ViewSelectedDataTemplatePage),
           },
         ],
       },

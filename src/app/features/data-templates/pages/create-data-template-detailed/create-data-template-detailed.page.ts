@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { WithBackButtonLayoutComponent } from '@app/shared/layouts/with-back-button/with-back-button.layout';
 import { IonContent } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
-import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-tamplate.state';
+import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
 import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { commonModules } from '@app/shared/common.modules';
