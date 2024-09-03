@@ -36,6 +36,13 @@ export const dataTemplatesRoutes: Routes = [
                 '@data-templates/pages/view-data-templates/view-data-templates.page'
               ).then((m) => m.ViewDataTemplatesPage),
           },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import(
+                '@data-templates/pages/view-selected-data-template/view-selected-data-template.page'
+              ).then((m) => m.ViewSelectedDataTemplatePage),
+          },
         ],
       },
     ],
