@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,6 +11,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { commonModules } from '@app/shared/common.modules';
 import { ButtonComponent } from '@app/shared/components/button/button.component';
+import { NewDataTemplateStateModel } from '../../stores/new-data-template-store/new-data-template-state.type';
+import { Store } from '@ngxs/store';
+import { SetNewDataTemplateBasicDetails } from '../../stores/new-data-template-store/new-data-template.actions';
+import { Router } from '@angular/router';
+import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-tamplate.state';
 
 @Component({
   selector: 'app-create-data-template-basic-details',
@@ -27,39 +32,11 @@ import { ButtonComponent } from '@app/shared/components/button/button.component'
   ],
 })
 export class CreateDataTemplateBasicDetailsPage {
-  plotOptions = [
-    {
-      id: 'plo1',
-      label: 'Plot 1',
-    },
-    {
-      id: 'plo2',
-      label: 'Plot 2',
-    },
-    {
-      id: 'plo3',
-      label: 'Plot 3',
-    },
-    {
-      id: 'plo4',
-      label: 'Plot 4',
-    },
-  ];
+  store = inject(Store);
+  router = inject(Router);
 
-  workflowOptions = [
-    {
-      id: 'wf1',
-      label: 'Workflow 1',
-    },
-    {
-      id: 'wf2',
-      label: 'Workflow 2',
-    },
-    {
-      id: 'wf3',
-      label: 'Workflow 3',
-    },
-  ];
+  plotOptions$ = this.store.select(NewDataTemplateState.getPlotOptions);
+  workflowOptions$ = this.store.select(NewDataTemplateState.getWorkflowOptions);
 
   createDataTemplateBasicDetailsFormGroup = new FormGroup({
     dataTemplateName: new FormControl('', [Validators.required]),
@@ -77,20 +54,17 @@ export class CreateDataTemplateBasicDetailsPage {
     const formData = this.toCreateDataTemplateBasicDetailsFormData(
       this.createDataTemplateBasicDetailsFormGroup.value
     );
-    console.log(formData);
+    this.store.dispatch(new SetNewDataTemplateBasicDetails(formData));
+    this.router.navigate(['/data-templates/create/detailed']);
   }
 
   private toCreateDataTemplateBasicDetailsFormData(
     value: typeof this.createDataTemplateBasicDetailsFormGroup.value
   ) {
     return {
-      name: value.dataTemplateName,
-      plot: value.plot?.id,
-      workflow: value.workflow?.id,
-    } as {
-      name: string;
-      plot: string;
-      workflow: string;
+      name: value.dataTemplateName ?? undefined,
+      plot: value.plot ?? undefined,
+      workflow: value.workflow ?? undefined,
     };
   }
 }

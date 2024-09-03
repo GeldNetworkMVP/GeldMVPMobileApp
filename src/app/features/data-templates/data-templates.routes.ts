@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { provideStates } from '@ngxs/store';
+import { NewDataTemplateState } from './stores/new-data-template-store/new-data-tamplate.state';
 
 export const dataTemplatesRoutes: Routes = [
   {
@@ -22,6 +24,7 @@ export const dataTemplatesRoutes: Routes = [
               ).then((m) => m.CreateDataTemplateDetailedPage),
           },
         ],
+        providers: [provideStates([NewDataTemplateState])],
       },
       {
         path: 'view',
@@ -34,7 +37,7 @@ export const dataTemplatesRoutes: Routes = [
               ).then((m) => m.ViewDataTemplatesPage),
           },
         ],
-      }
+      },
     ],
   },
 ];
