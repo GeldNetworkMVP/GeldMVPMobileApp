@@ -15,7 +15,7 @@ import { NewDataTemplateStateModel } from '../../stores/new-data-template-store/
 import { Store } from '@ngxs/store';
 import { SetNewDataTemplateBasicDetails } from '../../stores/new-data-template-store/new-data-template.actions';
 import { Router } from '@angular/router';
-import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-tamplate.state';
+import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
 
 @Component({
   selector: 'app-create-data-template-basic-details',
