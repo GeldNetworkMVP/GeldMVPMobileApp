@@ -1,8 +1,40 @@
 <ion-menu contentId="sidebar-content">
-  <ion-content class="ion-padding">
-    <ion-menu-toggle>
-      <ion-button>Click to close the menu</ion-button>
-    </ion-menu-toggle>
+  <ion-content>
+    <aside class="p-4">
+      <div class="flex justify-end mt-8">
+        <ion-menu-toggle>
+          <button>
+            <iconify-icon class="text-[1.75rem]" icon="lucide:x" />
+          </button>
+        </ion-menu-toggle>
+      </div>
+      <div class="flex flex-col items-center justify-center gap-2">
+        <img
+          src="assets/images/avatar-placeholder.svg"
+          alt="John Doe"
+          class="w-[55px] h-[55px] rounded-full"
+        />
+        <p class="text-[24px] font-[700]">John Doe</p>
+      </div>
+      <nav class="mt-12">
+        <ul class="flex flex-col">
+          @for (item of sideNavItems; track item.label) {
+          <li
+            class="flex justify-between items-enter text-[18px]"
+            (click)="item.action ? item.action() : goTo(item.route ?? '/home')"
+          >
+            {{ item.label }}
+            <iconify-icon
+              class="text-[1.25rem]"
+              [icon]="item.icon ?? 'lucide:chevron-right'"
+            />
+          </li>
+          @if (item.label !== 'Logout') {
+          <p-divider />
+          } }
+        </ul>
+      </nav>
+    </aside>
   </ion-content>
 </ion-menu>
 <!-- <app-sidebar /> -->
@@ -15,7 +47,6 @@
         <button>
           <iconify-icon class="text-[1.75rem]" icon="lucide:menu" />
         </button>
-        <!-- <ion-button>Click to open the menu</ion-button> -->
       </ion-menu-toggle>
       <div class="flex mt-2">
         <h1 style="line-height: 210%">
