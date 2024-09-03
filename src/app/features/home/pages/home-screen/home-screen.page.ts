@@ -1,5 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { SideNavItem } from '@shared/types/side-nav-item.type';
 import {
   IonToolbar,
   IonHeader,
@@ -11,13 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
-
-type SideNavItem = {
-  label: string;
-  icon?: string;
-  route?: string;
-  action?: () => void;
-};
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-home-screen',
@@ -34,6 +29,7 @@ type SideNavItem = {
     IonMenuToggle,
     ButtonModule,
     DividerModule,
+    RippleModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,

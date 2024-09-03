@@ -41,14 +41,14 @@
 <div class="ion-page" id="sidebar-content">
   <ion-content [fullscreen]="true">
     <header
-      class="text-[var(--light-gray)] bg-[var(--dark-green)] pt-12 pb-6 px-4"
+      class="text-[var(--light-gray)] bg-[var(--dark-green)] pt-12 pb-10 px-4"
     >
       <ion-menu-toggle>
         <button>
           <iconify-icon class="text-[1.75rem]" icon="lucide:menu" />
         </button>
       </ion-menu-toggle>
-      <div class="flex mt-2">
+      <div class="flex mt-2 justify-between items-center">
         <h1 style="line-height: 210%">
           <span class="text-[24px]"> Good Morning, </span>
           <span class="block font-[700] text-[48px]">John Doe.</span>
@@ -60,6 +60,38 @@
         />
       </div>
     </header>
+    <main class="flex justify-center p-8">
+      <nav class="w-full">
+        <ul class="w-full flex flex-col gap-4">
+          <li>
+            <a
+              pRipple
+              [routerLink]="['/new-data-template']"
+              class="flex items-center justify-center gap-4 py-5 text-[18px] bg-gradient-to-b from-[#FFF] to-[#F6F6F6] rounded-[10px]"
+            >
+              <img
+                src="assets/icon/new_data_template.svg"
+                alt="New Data Template"
+              />
+              New Data Template
+            </a>
+          </li>
+          <li>
+            <a
+              pRipple
+              [routerLink]="['/view-data-templates']"
+              class="flex items-center justify-center gap-4 py-5 text-[18px] bg-gradient-to-b from-[#FFF] to-[#F6F6F6] rounded-[10px]"
+            >
+              <img
+                src="assets/icon/view_data_templates.svg"
+                alt="View Data Templates"
+              />
+              View Data Templates
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </main>
   </ion-content>
 </div>
 <!-- </ion-content> -->
