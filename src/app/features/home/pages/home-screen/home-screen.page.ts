@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { SideNavItem } from '@shared/types/side-nav-item.type';
 import {
@@ -13,6 +13,7 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-home-screen',
@@ -35,10 +36,14 @@ import { RippleModule } from 'primeng/ripple';
   standalone: true,
 })
 export class HomeScreenPage {
+  // selecting child components
+  @ViewChild(IonMenu) menu!: IonMenu;
+
   router = inject(Router);
 
   goTo(route: string) {
     this.router.navigate([route]);
+    timer(500).subscribe(() => this.menu.close());
   }
 
   logout() {

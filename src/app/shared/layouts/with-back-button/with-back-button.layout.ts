@@ -4,14 +4,13 @@ import {
   inject,
   input,
 } from '@angular/core';
-// import { Router } from '@angular/router';
 import {
   IonBackButton,
   IonButtons,
   IonHeader,
   IonToolbar,
   IonContent,
-  NavController
+  NavController,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -26,9 +25,9 @@ export class WithBackButtonLayoutComponent {
   // Props
   urlToGoBack = input.required<string>();
   actionToPerformOnBack = input<() => void>();
+  pageTitle = input<string>();
 
   // Dependencies
-//   router = inject(Router);
   navCtrl = inject(NavController);
 
   goBack() {

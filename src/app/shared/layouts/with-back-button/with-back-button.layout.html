@@ -1,6 +1,14 @@
-<header class="flex items-center justify-start bg-red-500 px-2 py-4">
+<header class="flex items-center justify-start pt-4 pb-2 pl-2 pr-4">
   <button (click)="goBack()">
-    <iconify-icon icon="lucide:chevron-left" class="text-[1.75rem]"></iconify-icon>
+    <iconify-icon
+      icon="lucide:chevron-left"
+      class="text-[1.75rem]"
+    ></iconify-icon>
   </button>
 </header>
-<ng-content></ng-content>
+<main class="px-4">
+  @if(pageTitle()) {
+  <h1 class="text-[30px] font-[700]">{{ pageTitle() }}</h1>
+  }
+  <ng-content></ng-content>
+</main>
