@@ -20,7 +20,7 @@
         <ul class="flex flex-col">
           @for (item of sideNavItems; track item.label) {
           <li
-            class="flex justify-between items-enter text-[18px]"
+            class="flex justify-between items-enter text-[18px] cursor-pointer"
             (click)="item.action ? item.action() : goTo(item.route ?? '/home')"
           >
             {{ item.label }}
