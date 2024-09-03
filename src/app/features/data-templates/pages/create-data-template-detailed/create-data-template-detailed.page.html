@@ -1,0 +1,17 @@
+<ion-content>
+  <app-with-back-button
+    urlToGoBack="/data-templates/create/basic-details"
+    [pageTitle]="(dataTemplateName$ | async) ?? undefined"
+  >
+    <div class="flex items-center mt-4">
+      <div class="w-1/2">
+        <span class="text-[var(--gray)]">Plot</span>
+        <p>{{ (plotName$ | async) }}</p>
+      </div>
+      <div class="w-1/2">
+        <span class="text-[var(--gray)]">Workflow</span>
+        <p>{{ (workflowName$ | async) }}</p>
+      </div>
+    </div>
+  </app-with-back-button>
+</ion-content>

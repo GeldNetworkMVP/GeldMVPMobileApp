@@ -20,7 +20,7 @@
         <ul class="flex flex-col">
           @for (item of sideNavItems; track item.label) {
           <li
-            class="flex justify-between items-enter text-[18px]"
+            class="flex justify-between items-enter text-[18px] cursor-pointer"
             (click)="item.action ? item.action() : goTo(item.route ?? '/home')"
           >
             {{ item.label }}
@@ -66,7 +66,7 @@
           <li>
             <a
               pRipple
-              [routerLink]="['/new-data-template']"
+              [routerLink]="['/data-templates/create/basic-details']"
               class="flex items-center justify-center gap-4 py-5 text-[18px] bg-gradient-to-b from-[#FFF] to-[#F6F6F6] rounded-[10px]"
             >
               <img
@@ -79,7 +79,7 @@
           <li>
             <a
               pRipple
-              [routerLink]="['/view-data-templates']"
+              [routerLink]="['/data-templates/view']"
               class="flex items-center justify-center gap-4 py-5 text-[18px] bg-gradient-to-b from-[#FFF] to-[#F6F6F6] rounded-[10px]"
             >
               <img

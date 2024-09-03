@@ -30,6 +30,7 @@
       "@home/*": ["src/app/features/home/*"],
       "@assets/*": ["src/assets/*"],
       "@shared/*": ["src/app/shared/*"],
+      "@data-templates/*": ["src/app/features/data-templates/*"]
     }
   },
   "angularCompilerOptions": {

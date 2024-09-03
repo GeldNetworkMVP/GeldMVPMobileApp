@@ -34,6 +34,11 @@
         background-color: var(--yellow);
         color: #000;
     }
+
+    &--disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }
 
 
