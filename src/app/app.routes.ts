@@ -1,8 +1,9 @@
-import { Routes } from "@angular/router";
-import { informationalRoutes } from "@informational/informational.routes";
-import {homeRoutes} from '@home/home.routes'
+import { informationalRoutes } from '@informational/informational.routes';
+import { homeRoutes } from '@home/home.routes';
+import { dataTemplatesRoutes } from '@data-templates/data-templates.routes';
 
-export const appRoutes: Routes = [
-    ...homeRoutes,
-    ...informationalRoutes
+export const appRoutes = [
+  ...homeRoutes,
+  ...informationalRoutes,
+  ...dataTemplatesRoutes,
 ];
