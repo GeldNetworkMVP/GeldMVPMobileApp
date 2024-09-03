@@ -47,16 +47,16 @@ export class HomeScreenPage {
 
   sideNavItems: SideNavItem[] = [
     {
-      label: 'Edit User Profile',
-      route: '/edit-user-profile',
+      label: 'View Profile',
+      route: '/profile',
     },
     {
       label: 'New Data Template',
-      route: '/new-data-template',
+      route: '/data-templates/create/basic-details',
     },
     {
       label: 'View Data Templates',
-      route: '/view-data-templates',
+      route: '/data-templates/view',
     },
     {
       label: 'Logout',
