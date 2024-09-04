@@ -32,11 +32,11 @@
           <label for="plot">Select Plot</label>
           <p-dropdown
             [filter]="true"
-            [filterBy]="'label'"
+            [filterBy]="'collectionname'"
             id="plot"
             formControlName="plot"
-            [options]="(plotOptions$ | async) ?? []"
-            optionLabel="label"
+            [options]="(availablePlots$ | async) ?? []"
+            optionLabel="collectionname"
             placeholder="Select Plot"
             variant="filled"
           />
@@ -46,10 +46,10 @@
           <p-dropdown
             id="workflow"
             [filter]="true"
-            [filterBy]="'label'"
+            [filterBy]="'workflowname'"
             formControlName="workflow"
-            [options]="(workflowOptions$ | async) ?? []"
-            optionLabel="label"
+            [options]="(availableWorkflows$ | async) ?? []"
+            optionLabel="workflowname"
             placeholder="Select Workflow"
             variant="filled"
           />

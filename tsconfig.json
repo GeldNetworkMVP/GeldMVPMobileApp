@@ -43,6 +43,12 @@
       ],
       "@shared/*": [
         "src/app/shared/*"
+      ],
+      "@workflows/*": [
+        "src/app/features/workflows/*"
+      ],
+      "@plots/*": [
+        "src/app/features/plots/*"
       ]
     },
     "skipLibCheck": true

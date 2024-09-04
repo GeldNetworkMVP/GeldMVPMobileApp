@@ -1,12 +1,12 @@
+import { Plot } from '@app/features/plots/models/plot.model';
+import { Workflow } from '@app/features/workflows/models/workflow.model';
+
 export type NewDataTemplateStateModel = {
   basicDetails:
     | {
-        name: string | undefined;
-        plot: { id: string; label: string } | undefined;
-        workflow: { id: string; label: string } | undefined;
+        name: string;
+        plot: Plot;
+        workflow: Workflow;
       }
     | undefined;
-
-  plotOptions: { id: string; label: string }[];
-  workflowOptions: { id: string; label: string }[];
 };

@@ -15,6 +15,11 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { withNgxsLoggerPlugin } from '@ngxs/logger-plugin';
 import { provideStore } from '@ngxs/store';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { MetadataState } from './shared/stores/metadata.state';
 
 const initializePrimeNGConfig = (primeConfig: PrimeNGConfig) => () => {
   primeConfig.ripple = true;
@@ -36,6 +41,11 @@ export const appConfig: ApplicationConfig = {
     provideIonicAngular(),
     importProvidersFrom(IonicModule.forRoot({})),
     provideAnimations(),
-    provideStore([], withNgxsReduxDevtoolsPlugin(), withNgxsLoggerPlugin()),
+    provideStore(
+      [MetadataState],
+      withNgxsReduxDevtoolsPlugin(),
+      withNgxsLoggerPlugin()
+    ),
+    provideHttpClient(withInterceptorsFromDi()),
   ],
 };

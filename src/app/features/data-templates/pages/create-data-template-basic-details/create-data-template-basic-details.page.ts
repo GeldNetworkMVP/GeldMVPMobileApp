@@ -1,10 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WithBackButtonLayoutComponent } from '@app/shared/layouts/with-back-button/with-back-button.layout';
 import { IonContent } from '@ionic/angular/standalone';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,6 +11,9 @@ import { Store } from '@ngxs/store';
 import { SetNewDataTemplateBasicDetails } from '../../stores/new-data-template-store/new-data-template.actions';
 import { Router } from '@angular/router';
 import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
+import { MetadataState } from '@app/shared/stores/metadata.state';
+import { Workflow } from '@app/features/workflows/models/workflow.model';
+import { Plot } from '@app/features/plots/models/plot.model';
 
 @Component({
   selector: 'app-create-data-template-basic-details',
@@ -35,19 +33,15 @@ export class CreateDataTemplateBasicDetailsPage {
   store = inject(Store);
   router = inject(Router);
 
-  plotOptions$ = this.store.select(NewDataTemplateState.getPlotOptions);
-  workflowOptions$ = this.store.select(NewDataTemplateState.getWorkflowOptions);
+  availablePlots$ = this.store.select(MetadataState.getAvailablePlots);
+  availableWorkflows$ = this.store.select(MetadataState.getAvailableWorkflows);
 
   createDataTemplateBasicDetailsFormGroup = new FormGroup({
     dataTemplateName: new FormControl('', [Validators.required]),
-    plot: new FormControl<{ id: string; label: string } | undefined>(
-      undefined,
-      [Validators.required]
-    ),
-    workflow: new FormControl<{ id: string; label: string } | undefined>(
-      undefined,
-      [Validators.required]
-    ),
+    plot: new FormControl<Plot | undefined>(undefined, [Validators.required]),
+    workflow: new FormControl<Workflow | undefined>(undefined, [
+      Validators.required,
+    ]),
   });
 
   onSubmit() {
@@ -61,10 +55,14 @@ export class CreateDataTemplateBasicDetailsPage {
   private toCreateDataTemplateBasicDetailsFormData(
     value: typeof this.createDataTemplateBasicDetailsFormGroup.value
   ) {
-    return {
-      name: value.dataTemplateName ?? undefined,
-      plot: value.plot ?? undefined,
-      workflow: value.workflow ?? undefined,
-    };
+    console.log(value);
+    if (value.dataTemplateName && value.plot && value.workflow) {
+      return {
+        name: value.dataTemplateName,
+        plot: value.plot,
+        workflow: value.workflow,
+      };
+    }
+    return undefined;
   }
 }

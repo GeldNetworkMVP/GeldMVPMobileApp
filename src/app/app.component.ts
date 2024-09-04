@@ -1,5 +1,11 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  OnInit,
+} from '@angular/core';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { MetadataService } from './shared/services/metadata.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +14,10 @@ import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
   standalone: true,
   imports: [IonRouterOutlet, IonApp],
 })
-export class AppComponent {
-  constructor() {}
+export class AppComponent implements OnInit {
+  metadataService = inject(MetadataService);
+
+  ngOnInit(): void {
+    this.metadataService.setMetadata();
+  }
 }

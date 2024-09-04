@@ -6,13 +6,21 @@ import { NewDataTemplateState } from '../../stores/new-data-template-store/new-d
 import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { commonModules } from '@app/shared/common.modules';
+import { ButtonComponent } from '@app/shared/components/button/button.component';
+import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-create-data-template-detailed',
   styleUrls: ['./create-data-template-detailed.page.scss'],
   templateUrl: './create-data-template-detailed.page.html',
   standalone: true,
-  imports: [IonContent, WithBackButtonLayoutComponent, ...commonModules],
+  imports: [
+    DropdownModule,
+    ButtonComponent,
+    IonContent,
+    WithBackButtonLayoutComponent,
+    ...commonModules,
+  ],
 })
 export class CreateDataTemplateDetailedPage implements OnInit {
   store = inject(Store);
@@ -25,6 +33,9 @@ export class CreateDataTemplateDetailedPage implements OnInit {
   );
   plotName$ = this.store.select(NewDataTemplateState.getPlotName);
   workflowName$ = this.store.select(NewDataTemplateState.getWorkflowName);
+  availableStagesToSelect$ = this.store.select(
+    NewDataTemplateState.getAvailableStagesToSelect
+  );
 
   destroy$ = new Subject();
 
@@ -36,5 +47,11 @@ export class CreateDataTemplateDetailedPage implements OnInit {
           this.router.navigate(['/data-templates/create/basic-details']);
         }
       });
+  }
+
+  onSelectStage({ value }: DropdownChangeEvent) {
+    if (typeof value === 'string') {
+      console.log(value);
+    }
   }
 }

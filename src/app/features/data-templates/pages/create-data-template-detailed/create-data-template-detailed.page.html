@@ -13,5 +13,21 @@
         <p>{{ (workflowName$ | async) }}</p>
       </div>
     </div>
+    <form class="mt-4 flex flex-col gap-4 flex-grow pb-8">
+      <div class="flex flex-col gap-2">
+        <label for="plot">Select Stage</label>
+        <p-dropdown
+          [filter]="true"
+          id="stage"
+          [options]="(availableStagesToSelect$ | async) ?? []"
+          placeholder="Select Stage"
+          variant="filled"
+          (onChange)="onSelectStage($event)"
+        />
+      </div>
+      <footer class="mt-auto">
+        <app-button color="yellow" [block]="true"> Next </app-button>
+      </footer>
+    </form>
   </app-with-back-button>
 </ion-content>

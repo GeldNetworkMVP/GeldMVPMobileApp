@@ -6,49 +6,7 @@ import { SetNewDataTemplateBasicDetails } from './new-data-template.actions';
 @State<NewDataTemplateStateModel>({
   name: 'newDataTemplate',
   defaults: {
-    basicDetails: {
-      name: 'DT0001',
-      plot: {
-        id: 'plo1',
-        label: 'Plot 1',
-      },
-      workflow: {
-        id: 'wf1',
-        label: 'Workflow 1',
-      },
-    },
-    plotOptions: [
-      {
-        id: 'plo1',
-        label: 'Plot 1',
-      },
-      {
-        id: 'plo2',
-        label: 'Plot 2',
-      },
-      {
-        id: 'plo3',
-        label: 'Plot 3',
-      },
-      {
-        id: 'plo4',
-        label: 'Plot 4',
-      },
-    ],
-    workflowOptions: [
-      {
-        id: 'wf1',
-        label: 'Workflow 1',
-      },
-      {
-        id: 'wf2',
-        label: 'Workflow 2',
-      },
-      {
-        id: 'wf3',
-        label: 'Workflow 3',
-      },
-    ],
+    basicDetails: undefined,
   },
 })
 @Injectable()
@@ -66,22 +24,17 @@ export class NewDataTemplateState {
 
   @Selector()
   static getPlotName(state: NewDataTemplateStateModel) {
-    return state.basicDetails?.plot?.label;
+    return state.basicDetails?.plot?.collectionname;
   }
 
   @Selector()
   static getWorkflowName(state: NewDataTemplateStateModel) {
-    return state.basicDetails?.workflow?.label;
+    return state.basicDetails?.workflow?.workflowname;
   }
 
   @Selector()
-  static getPlotOptions(state: NewDataTemplateStateModel) {
-    return state.plotOptions;
-  }
-
-  @Selector()
-  static getWorkflowOptions(state: NewDataTemplateStateModel) {
-    return state.workflowOptions;
+  static getAvailableStagesToSelect(state: NewDataTemplateStateModel) {
+    return state.basicDetails?.workflow?.stages ?? [];
   }
 
   // define actions
