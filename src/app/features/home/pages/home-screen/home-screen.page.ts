@@ -1,4 +1,10 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, ViewChild } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { SideNavItem } from '@shared/types/side-nav-item.type';
 import {
