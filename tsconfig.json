@@ -17,39 +17,20 @@
     "importHelpers": true,
     "target": "es2022",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "useDefineForClassFields": false,
     "paths": {
-      "@app/*": [
-        "src/app/*"
-      ],
-      "@assets/*": [
-        "src/assets/*"
-      ],
-      "@data-templates/*": [
-        "src/app/features/data-templates/*"
-      ],
-      "@features/*": [
-        "src/app/features/*"
-      ],
-      "@home/*": [
-        "src/app/features/home/*"
-      ],
-      "@informational/*": [
-        "src/app/features/informational/*"
-      ],
-      "@shared/*": [
-        "src/app/shared/*"
-      ],
-      "@workflows/*": [
-        "src/app/features/workflows/*"
-      ],
-      "@plots/*": [
-        "src/app/features/plots/*"
-      ]
+      "@app/*": ["src/app/*"],
+      "@assets/*": ["src/assets/*"],
+      "@data-templates/*": ["src/app/features/data-templates/*"],
+      "@features/*": ["src/app/features/*"],
+      "@home/*": ["src/app/features/home/*"],
+      "@informational/*": ["src/app/features/informational/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@workflows/*": ["src/app/features/workflows/*"],
+      "@plots/*": ["src/app/features/plots/*"],
+      "@stages/*": ["src/app/features/stages/*"],
+      "@records/*": ["src/app/features/records/*"]
     },
     "skipLibCheck": true
   },

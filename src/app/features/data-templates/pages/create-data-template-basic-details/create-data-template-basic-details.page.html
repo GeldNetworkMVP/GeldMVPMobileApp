@@ -40,6 +40,10 @@
             placeholder="Select Plot"
             variant="filled"
           />
+          @if(createDataTemplateBasicDetailsFormGroup.get('plot')?.invalid &&
+          createDataTemplateBasicDetailsFormGroup.get('plot')?.touched) {
+          <small class="text-red-500"> Plot is required </small>
+          }
         </div>
         <div class="flex flex-col gap-2">
           <label for="workflow">Select Workflow</label>
@@ -53,6 +57,10 @@
             placeholder="Select Workflow"
             variant="filled"
           />
+          @if(createDataTemplateBasicDetailsFormGroup.get('workflow')?.invalid
+          && createDataTemplateBasicDetailsFormGroup.get('workflow')?.touched) {
+          <small class="text-red-500"> Workflow is required </small>
+          }
         </div>
         <footer class="mt-auto">
           <app-button
@@ -60,7 +68,8 @@
             [block]="true"
             [disabled]="createDataTemplateBasicDetailsFormGroup.invalid"
           >
-            Next
+            {{ createDataTemplateBasicDetailsFormGroup.valid ? 'Next' : 'Please
+            fill all the fields' }}
           </app-button>
         </footer>
       </form>
