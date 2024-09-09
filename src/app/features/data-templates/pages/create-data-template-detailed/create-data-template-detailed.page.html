@@ -31,12 +31,16 @@
           />
         </div>
         @if(constructingForm()){
-        <p-skeleton height="2.625rem" styleClass="mb-2" />
-        <p-skeleton height="2.625rem" styleClass="mb-2" />
-        <p-skeleton height="2.625rem" styleClass="mb-2" />
-        <p-skeleton height="2.625rem" styleClass="mb-2" />
-        <p-skeleton height="2.625rem" styleClass="mb-2" />
-        <p-skeleton height="2.625rem" styleClass="mb-2" />
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] mt-1 w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
 
         } @else { @for(field of dynamicFormFields(); track field.id){
         @if(isInputTextFieldByProcessedField(field)){
