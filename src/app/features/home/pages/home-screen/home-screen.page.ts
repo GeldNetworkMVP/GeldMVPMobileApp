@@ -2,7 +2,6 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   inject,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
@@ -20,6 +19,8 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
 import { timer } from 'rxjs';
+import { DatePipe } from '@angular/common';
+import { WeatherDisplayComponent } from '@app/features/weather-data/components/weather-display/weather-display.component';
 
 @Component({
   selector: 'app-home-screen',
@@ -37,15 +38,15 @@ import { timer } from 'rxjs';
     ButtonModule,
     DividerModule,
     RippleModule,
+    DatePipe,
+    WeatherDisplayComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
 })
 export class HomeScreenPage {
-  // selecting child components
+  private readonly router = inject(Router);
   @ViewChild(IonMenu) menu!: IonMenu;
-
-  router = inject(Router);
 
   goTo(route: string) {
     this.router.navigate([route]);

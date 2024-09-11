@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { ButtonModule } from 'primeng/button';
 import { NgOptimizedImage } from '@angular/common';
@@ -12,5 +12,4 @@ import { ButtonComponent } from '@shared/components/button/button.component';
   imports: [IonContent, ButtonModule, ButtonComponent, NgOptimizedImage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class WelcomeScreenPage {
-}
+export class WelcomeScreenPage {}
