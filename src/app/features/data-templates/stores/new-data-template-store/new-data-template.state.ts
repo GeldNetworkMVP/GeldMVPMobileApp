@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+
 import { NewDataTemplateStateModel } from './new-data-template-state.type';
 import { SetNewDataTemplateBasicDetails } from './new-data-template.actions';
 

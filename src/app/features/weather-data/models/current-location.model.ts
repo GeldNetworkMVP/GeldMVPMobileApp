@@ -8,3 +8,4 @@ export interface CurrentLocation {
   localtime_epoch: number;
   localtime: string;
 }
+

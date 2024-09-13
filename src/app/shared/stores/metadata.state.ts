@@ -1,7 +1,8 @@
+import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+
 import { MetadataStateModel } from './metadata-state.type';
 import { SetAvailablePlots, SetAvailableWorkflows } from './metadata.actions';
-import { Injectable } from '@angular/core';
 
 @State<MetadataStateModel>({
   name: 'metadata',

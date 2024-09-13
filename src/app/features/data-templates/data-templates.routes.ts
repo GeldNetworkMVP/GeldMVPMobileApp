@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { provideStates } from '@ngxs/store';
+
 import { NewDataTemplateState } from './stores/new-data-template-store/new-data-template.state';
 
 export const dataTemplatesRoutes: Routes = [

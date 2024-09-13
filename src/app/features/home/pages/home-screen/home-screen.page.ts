@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -5,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { SideNavItem } from '@shared/types/side-nav-item.type';
 import {
   IonToolbar,
   IonHeader,
@@ -19,8 +19,10 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
 import { timer } from 'rxjs';
-import { DatePipe } from '@angular/common';
+
 import { WeatherDisplayComponent } from '@app/features/weather-data/components/weather-display/weather-display.component';
+
+import { SideNavItem } from '@shared/types/side-nav-item.type';
 
 @Component({
   selector: 'app-home-screen',

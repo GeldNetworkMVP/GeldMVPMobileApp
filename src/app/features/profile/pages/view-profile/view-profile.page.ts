@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { WithBackButtonLayoutComponent } from "@app/shared/layouts/with-back-button/with-back-button.layout";
 import { IonContent } from "@ionic/angular/standalone";
+
+import { WithBackButtonLayoutComponent } from "@app/shared/layouts/with-back-button/with-back-button.layout";
 
 @Component({
   selector: 'app-view-profile',

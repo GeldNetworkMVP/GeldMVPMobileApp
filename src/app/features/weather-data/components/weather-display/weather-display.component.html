@@ -4,8 +4,15 @@
   style="background-image: linear-gradient(180deg, #fff 0%, #f6f6f6 100%)"
 >
   <p class="text-[12px] flex items-center justify-center gap-2">
-    <span> {{ currentDate() | date : "MMM d, hh:mma" }} </span>
-    <span> {{ weatherData()?.location?.country }} </span>
+    <span>
+      {{
+        weatherData()?.current?.last_updated_as_date | date : "MMM d, hh:mma"
+      }}
+    </span>
+    <span>
+      {{ weatherData()?.location?.name }},
+      {{ weatherData()?.location?.country }}
+    </span>
   </p>
   <div class="flex items-center justify-center gap-2">
     <img
@@ -19,5 +26,19 @@
     {{ weatherData()?.current?.condition?.text }}
   </p>
 </div>
-
+} @else if(weatherDataError()) {
+<p
+  class="absolute left-1/2 bottom-10 translate-x-[-50%] flex flex-col gap-1 py-4 px-8 rounded-2xl w-[90%]"
+>
+  {{ weatherDataError() }}
+</p>
+} @else {
+<div class="absolute left-1/2 bottom-10 translate-x-[-50%]">
+  <p-progressSpinner
+    styleClass="w-[4rem] h-[4rem]"
+    strokeWidth="4"
+    animationDuration="1s"
+    class="spinner"
+  />
+</div>
 }

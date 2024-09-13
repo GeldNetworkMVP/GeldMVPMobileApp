@@ -1,33 +1,37 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { WithBackButtonLayoutComponent } from '@app/shared/layouts/with-back-button/with-back-button.layout';
-import { IonContent } from '@ionic/angular/standalone';
-import { Store } from '@ngxs/store';
-import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
-import { first, firstValueFrom, Subject, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
-import { commonModules } from '@app/shared/common.modules';
-import { ButtonComponent } from '@app/shared/components/button/button.component';
-import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
-import { SkeletonModule } from 'primeng/skeleton';
-import { InputTextModule } from 'primeng/inputtext';
-import { StagesService } from '@app/features/stages/services/stages.service';
-import { ProcessedInputField } from '@app/shared/models/processed-input-field.model';
-import { StageWithInputFields } from '@app/features/stages/models/stage-with-input-fields.model';
-import {
-  inputSelectFieldToProcessedInputField,
-  inputTextFieldToProcessedInputField,
-  isInputSelectFieldByProcessedField,
-  isInputTextField,
-  isInputTextFieldByProcessedField,
-} from '@app/shared/utils/input-fields.util';
-import { RecordsService } from '@app/features/records/services/records.service';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Record } from '@app/features/records/models/record.model';
+import { Router } from '@angular/router';
+import { IonContent } from '@ionic/angular/standalone';
+import { Store } from '@ngxs/store';
+import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { SkeletonModule } from 'primeng/skeleton';
+import { first, firstValueFrom, Subject, takeUntil } from 'rxjs';
+
+import { commonModules } from '@shared/common.modules';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { WithBackButtonLayoutComponent } from '@shared/layouts/with-back-button/with-back-button.layout';
+import { ProcessedInputField } from '@shared/models/processed-input-field.model';
+import {
+  inputSelectFieldToProcessedInputField,
+  inputTextFieldToProcessedInputField,
+  isInputSelectFieldByProcessedField,
+  isInputTextField,
+  isInputTextFieldByProcessedField,
+} from '@shared/utils/input-fields.util';
+
+import { StageWithInputFields } from '@stages/models/stage-with-input-fields.model';
+import { StagesService } from '@stages/services/stages.service';
+
+import { Record } from '@records/models/record.model';
+import { RecordsService } from '@records/services/records.service';
+
+import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
 
 @Component({
   selector: 'app-create-data-template-detailed',

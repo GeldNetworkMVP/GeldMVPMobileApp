@@ -1,12 +1,14 @@
 import { inject, Injectable } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { first } from 'rxjs';
+
 import { PlotsService } from '@app/features/plots/services/plots.service';
 import { WorkflowsService } from '@app/features/workflows/services/workflows.service';
-import { Store } from '@ngxs/store';
+
 import {
   SetAvailableWorkflows,
   SetAvailablePlots,
 } from '../stores/metadata.actions';
-import { first } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

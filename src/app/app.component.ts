@@ -5,6 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+
 import { MetadataService } from './shared/services/metadata.service';
 import { setOverlaysWebView } from './shared/utils/set-status-bar-colors.util';
 

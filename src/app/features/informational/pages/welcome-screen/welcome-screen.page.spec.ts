@@ -1,5 +1,6 @@
-import { WelcomeScreenPage } from './welcome-screen.page';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+
+import { WelcomeScreenPage } from './welcome-screen.page';
 
 
 describe('WelcomeScreenPage', () => {

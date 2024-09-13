@@ -1,14 +1,18 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, input, OnDestroy, signal } from '@angular/core';
-import { WeatherData } from '@app/features/weather-data/models/weather-data.model';
-import { WeatherDataService } from '@app/features/weather-data/services/weather-data.service';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
-import { Subject, Subscription, timer } from 'rxjs';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { map, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
+import { WeatherDataService } from '@weather-data/services/weather-data.service';
+
+import { PreparedWeatherData } from '../../models/prepared-weather-data.model';
+``
 @Component({
   selector: 'app-weather-display',
   standalone: true,
-  imports: [DatePipe, IonContent],
+  imports: [DatePipe, IonContent, ProgressSpinnerModule],
   templateUrl: './weather-display.component.html',
   styleUrls: ['./weather-display.component.scss'],
 })
@@ -16,46 +20,38 @@ export class WeatherDisplayComponent implements OnDestroy {
   private readonly weatherDataService = inject(WeatherDataService);
   private readonly takeUntilRef = new Subject<void>();
 
-  weatherData = signal<WeatherData | null>(null);
+  weatherData = signal<PreparedWeatherData | null>(null);
   isWeatherDataLoading = signal<boolean>(false);
   weatherDataError = signal<string | null>(null);
-  currentDate = signal<Date>(new Date());
-  private dateUpdateSubscription: Subscription;
 
   constructor() {
     this.isWeatherDataLoading.set(true);
     this.weatherDataService
       .setupPeriodicallyUpdatingWeatherDataSubscription(
-        15 * 60 * 1000 /* 15 minutes */,
+        environment.weatherRefreshInterval,
         this.takeUntilRef
       )
       .then((subscription) => {
-        subscription.subscribe({
-          next: (value) => {
-            if (!this.weatherData()) {
+        subscription
+          .pipe(map((data) => this.weatherDataService.prepareWeatherData(data)))
+          .subscribe({
+            next: (value) => {
+              if (!this.weatherData()) {
+                this.isWeatherDataLoading.set(false);
+              }
+              this.weatherData.set(value);
+              this.weatherDataError.set(null);
+            },
+            error: (error) => {
+              this.weatherDataError.set(error.message);
               this.isWeatherDataLoading.set(false);
-            }
-            console.log(value);
-            this.weatherData.set(value);
-          },
-          error: (error) => {
-            this.weatherDataError.set(error.message);
-            this.isWeatherDataLoading.set(false);
-          },
-        });
+            },
+          });
       });
-
-    this.dateUpdateSubscription = timer(0, 1000).subscribe(() => {
-      this.currentDate.set(new Date());
-    });
   }
 
   public ngOnDestroy() {
     this.takeUntilRef.next();
     this.takeUntilRef.complete();
-
-    if (this.dateUpdateSubscription) {
-      this.dateUpdateSubscription.unsubscribe();
-    }
   }
 }

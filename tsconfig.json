@@ -20,7 +20,6 @@
     "lib": ["es2018", "dom"],
     "useDefineForClassFields": false,
     "paths": {
-      "@app/*": ["src/app/*"],
       "@assets/*": ["src/assets/*"],
       "@data-templates/*": ["src/app/features/data-templates/*"],
       "@features/*": ["src/app/features/*"],
@@ -30,7 +29,9 @@
       "@workflows/*": ["src/app/features/workflows/*"],
       "@plots/*": ["src/app/features/plots/*"],
       "@stages/*": ["src/app/features/stages/*"],
-      "@records/*": ["src/app/features/records/*"]
+      "@records/*": ["src/app/features/records/*"],
+      "@weather-data/*": ["src/app/features/weather-data/*"],
+      "@app/*": ["src/app/*"]
     },
     "skipLibCheck": true
   },

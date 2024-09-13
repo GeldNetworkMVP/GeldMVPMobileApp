@@ -1,7 +1,7 @@
-import { RippleModule } from 'primeng/ripple';
-import { Component, computed, HostBinding, input, output } from "@angular/core";
 import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { Component, computed, HostBinding, input, output } from "@angular/core";
 import { RouterLink, UrlTree } from '@angular/router';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
     selector: "app-button",

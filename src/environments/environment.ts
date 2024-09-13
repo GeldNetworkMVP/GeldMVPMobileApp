@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://geldmvpbackend-production.up.railway.app'
+  apiUrl: 'https://geldmvpbackend-production.up.railway.app',
+  weatherRefreshInterval: 15 * 60 * 1000
 };
 
 /*

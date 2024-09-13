@@ -1,19 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { WithBackButtonLayoutComponent } from '@app/shared/layouts/with-back-button/with-back-button.layout';
-import { IonContent } from '@ionic/angular/standalone';
-import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
-import { commonModules } from '@app/shared/common.modules';
-import { ButtonComponent } from '@app/shared/components/button/button.component';
-import { NewDataTemplateStateModel } from '../../stores/new-data-template-store/new-data-template-state.type';
-import { Store } from '@ngxs/store';
-import { SetNewDataTemplateBasicDetails } from '../../stores/new-data-template-store/new-data-template.actions';
 import { Router } from '@angular/router';
-import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
-import { MetadataState } from '@app/shared/stores/metadata.state';
-import { Workflow } from '@app/features/workflows/models/workflow.model';
-import { Plot } from '@app/features/plots/models/plot.model';
+import { IonContent } from '@ionic/angular/standalone';
+import { Store } from '@ngxs/store';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+
+import { commonModules } from '@shared/common.modules';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { WithBackButtonLayoutComponent } from '@shared/layouts/with-back-button/with-back-button.layout';
+import { MetadataState } from '@shared/stores/metadata.state';
+
+import { Workflow } from '@workflows/models/workflow.model';
+
+import { Plot } from '@plots/models/plot.model';
+
+import { SetNewDataTemplateBasicDetails } from '../../stores/new-data-template-store/new-data-template.actions';
 
 @Component({
   selector: 'app-create-data-template-basic-details',
@@ -55,7 +57,6 @@ export class CreateDataTemplateBasicDetailsPage {
   private toCreateDataTemplateBasicDetailsFormData(
     value: typeof this.createDataTemplateBasicDetailsFormGroup.value
   ) {
-    console.log(value);
     if (value.dataTemplateName && value.plot && value.workflow) {
       return {
         name: value.dataTemplateName,
