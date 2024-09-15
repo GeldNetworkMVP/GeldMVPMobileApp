@@ -1,10 +1,12 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
+import { Store } from '@ngxs/store';
 import { injectParams } from 'ngxtension/inject-params';
 
-import { dataTemplates } from '@app/dummy-data/dummy-data-templates.dummy-data';
 import { commonModules } from '@app/shared/common.modules';
 import { WithBackButtonLayoutComponent } from '@app/shared/layouts/with-back-button/with-back-button.layout';
+
+import { DataTemplatesState } from '@data-templates/stores/data-templates-store/data-templates.state';
 
 @Component({
   selector: 'app-view-selected-data-template',
@@ -14,11 +16,15 @@ import { WithBackButtonLayoutComponent } from '@app/shared/layouts/with-back-but
   imports: [IonContent, WithBackButtonLayoutComponent, ...commonModules],
 })
 export class ViewSelectedDataTemplatePage {
+  store = inject(Store);
+  
   dataTemplateId = injectParams('id');
+  
+  dataTemplates = this.store.selectSignal(DataTemplatesState.getTemplates);
 
   selectedDataTemplate = computed(() => {
-    return dataTemplates.find(
-      (dataTemplate) => dataTemplate.id === this.dataTemplateId()
+    return this.dataTemplates().find(
+      (dataTemplate) => dataTemplate._id === this.dataTemplateId()
     );
   });
 }

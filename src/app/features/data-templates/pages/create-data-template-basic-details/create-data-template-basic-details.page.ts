@@ -35,8 +35,8 @@ export class CreateDataTemplateBasicDetailsPage {
   store = inject(Store);
   router = inject(Router);
 
-  availablePlots$ = this.store.select(MetadataState.getAvailablePlots);
-  availableWorkflows$ = this.store.select(MetadataState.getAvailableWorkflows);
+  availablePlots = this.store.selectSignal(MetadataState.getAvailablePlots);
+  availableWorkflows = this.store.selectSignal(MetadataState.getAvailableWorkflows);
 
   createDataTemplateBasicDetailsFormGroup = new FormGroup({
     dataTemplateName: new FormControl('', [Validators.required]),

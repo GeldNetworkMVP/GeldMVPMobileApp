@@ -22,7 +22,8 @@ import { timer } from 'rxjs';
 
 import { WeatherDisplayComponent } from '@app/features/weather-data/components/weather-display/weather-display.component';
 
-import { SideNavItem } from '@shared/types/side-nav-item.type';
+import { SideNavItem } from '@features/home/types/side-nav-item.type';
+
 
 @Component({
   selector: 'app-home-screen',

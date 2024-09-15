@@ -90,13 +90,15 @@
             "plots": ["@plots/**"],
             "stages": ["@stages/**"],
             "records": ["@records/**"],
-            "weather-data": ["@weather-data/**"]
+            "weather-data": ["@weather-data/**"],
+            "environments": ["@environments/**"]
           }
         },
         "groups": [
           "type",
           ["builtin", "external"],
           "app",
+          "environments",
           "assets",
           "data-templates",
           "features",

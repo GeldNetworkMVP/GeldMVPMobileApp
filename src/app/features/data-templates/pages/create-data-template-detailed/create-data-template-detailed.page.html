@@ -1,17 +1,17 @@
 <ion-content>
   <app-with-back-button
     urlToGoBack="/data-templates/create/basic-details"
-    [pageTitle]="(dataTemplateName$ | async) ?? undefined"
+    [pageTitle]="dataTemplateName()"
   >
     <div class="flex flex-col gap-4 min-h-[calc(100vh-103px)]">
       <div class="flex items-center mt-4">
         <div class="w-1/2">
           <span class="text-[var(--gray)]">Plot</span>
-          <p>{{ (plotName$ | async) }}</p>
+          <p>{{ plotName() }}</p>
         </div>
         <div class="w-1/2">
           <span class="text-[var(--gray)]">Workflow</span>
-          <p>{{ (workflowName$ | async) }}</p>
+          <p>{{ workflowName() }}</p>
         </div>
       </div>
       <form
@@ -23,7 +23,7 @@
           <p-dropdown
             [filter]="true"
             id="stage"
-            [options]="(availableStagesToSelect$ | async) ?? []"
+            [options]="availableStagesToSelect()"
             placeholder="Select Stage"
             variant="filled"
             (onChange)="onSelectStage($event)"
@@ -76,6 +76,7 @@
             [block]="true"
             (click)="onSubmit()"
             [disabled]="!formGroup().valid"
+            (keydown.enter)="onSubmit()"
           >
             {{ formGroup().valid ? 'Submit' : 'Please fill all the fields' }}
           </app-button>

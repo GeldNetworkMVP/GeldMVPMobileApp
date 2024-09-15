@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { provideStates } from '@ngxs/store';
 
+import { DataTemplatesState } from './stores/data-templates-store/data-templates.state';
 import { NewDataTemplateState } from './stores/new-data-template-store/new-data-template.state';
 
 export const dataTemplatesRoutes: Routes = [
@@ -45,6 +46,7 @@ export const dataTemplatesRoutes: Routes = [
               ).then((m) => m.ViewSelectedDataTemplatePage),
           },
         ],
+        providers: [provideStates([DataTemplatesState])],
       },
     ],
   },

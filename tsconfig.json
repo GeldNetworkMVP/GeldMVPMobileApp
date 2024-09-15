@@ -31,7 +31,8 @@
       "@stages/*": ["src/app/features/stages/*"],
       "@records/*": ["src/app/features/records/*"],
       "@weather-data/*": ["src/app/features/weather-data/*"],
-      "@app/*": ["src/app/*"]
+      "@app/*": ["src/app/*"],
+      "@environments/*": ["src/environments/*"]
     },
     "skipLibCheck": true
   },

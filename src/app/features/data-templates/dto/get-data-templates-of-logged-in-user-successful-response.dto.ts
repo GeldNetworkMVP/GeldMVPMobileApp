@@ -1,0 +1,6 @@
+import { DataTemplate } from "@data-templates/models/data-template.model"
+
+export type GetDataTemplatesOfLoggedInUserSuccessfulResponseDto = { 
+    Status: number
+    Response: DataTemplate[]
+}

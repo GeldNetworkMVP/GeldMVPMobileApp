@@ -44,9 +44,7 @@ export class NewDataTemplateState {
     ctx: StateContext<NewDataTemplateStateModel>,
     action: SetNewDataTemplateBasicDetails
   ) {
-    const state = ctx.getState();
-    ctx.setState({
-      ...state,
+    ctx.patchState({
       basicDetails: action.basicDetails,
     });
   }

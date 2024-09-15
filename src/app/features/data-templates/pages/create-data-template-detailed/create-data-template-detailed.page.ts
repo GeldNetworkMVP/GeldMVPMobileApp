@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,7 +11,7 @@ import { Store } from '@ngxs/store';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
-import { first, firstValueFrom, Subject, takeUntil } from 'rxjs';
+import { first, firstValueFrom, Subject } from 'rxjs';
 
 import { commonModules } from '@shared/common.modules';
 import { ButtonComponent } from '@shared/components/button/button.component';
@@ -48,7 +48,7 @@ import { NewDataTemplateState } from '../../stores/new-data-template-store/new-d
     ...commonModules,
   ],
 })
-export class CreateDataTemplateDetailedPage implements OnInit {
+export class CreateDataTemplateDetailedPage {
   private readonly store = inject(Store);
   private readonly router = inject(Router);
   private readonly formBuilder = inject(FormBuilder);
@@ -60,13 +60,13 @@ export class CreateDataTemplateDetailedPage implements OnInit {
   isInputSelectFieldByProcessedField = isInputSelectFieldByProcessedField;
 
   // selectors
-  basicDetails$ = this.store.select(NewDataTemplateState.getBasicDetails);
-  dataTemplateName$ = this.store.select(
+  basicDetails = this.store.selectSignal(NewDataTemplateState.getBasicDetails);
+  dataTemplateName = this.store.selectSignal(
     NewDataTemplateState.getDataTemplateName
   );
-  plotName$ = this.store.select(NewDataTemplateState.getPlotName);
-  workflowName$ = this.store.select(NewDataTemplateState.getWorkflowName);
-  availableStagesToSelect$ = this.store.select(
+  plotName = this.store.selectSignal(NewDataTemplateState.getPlotName);
+  workflowName = this.store.selectSignal(NewDataTemplateState.getWorkflowName);
+  availableStagesToSelect = this.store.selectSignal(
     NewDataTemplateState.getAvailableStagesToSelect
   );
 
@@ -81,14 +81,11 @@ export class CreateDataTemplateDetailedPage implements OnInit {
   constructingForm = signal(false);
   dynamicFormFields = signal<ProcessedInputField[]>([]);
 
-  ngOnInit() {
-    this.basicDetails$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((basicDetails) => {
-        if (!basicDetails) {
-          this.router.navigate(['/data-templates/create/basic-details']);
-        }
-      });
+  constructor() {
+    effect(() => {
+      if (!this.basicDetails())
+        this.router.navigate(['/data-templates/create/basic-details']);
+    });
   }
 
   onSelectStage({ value }: DropdownChangeEvent) {
