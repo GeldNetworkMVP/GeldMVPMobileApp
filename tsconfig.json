@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -18,11 +17,24 @@
     "importHelpers": true,
     "target": "es2022",
     "module": "es2020",
-    "lib": [
-      "es2018", 
-      "dom"
-    ],
-    "useDefineForClassFields": false
+    "lib": ["es2018", "dom"],
+    "useDefineForClassFields": false,
+    "paths": {
+      "@assets/*": ["src/assets/*"],
+      "@data-templates/*": ["src/app/features/data-templates/*"],
+      "@features/*": ["src/app/features/*"],
+      "@home/*": ["src/app/features/home/*"],
+      "@informational/*": ["src/app/features/informational/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@workflows/*": ["src/app/features/workflows/*"],
+      "@plots/*": ["src/app/features/plots/*"],
+      "@stages/*": ["src/app/features/stages/*"],
+      "@records/*": ["src/app/features/records/*"],
+      "@weather-data/*": ["src/app/features/weather-data/*"],
+      "@app/*": ["src/app/*"],
+      "@environments/*": ["src/environments/*"]
+    },
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

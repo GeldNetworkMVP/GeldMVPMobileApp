@@ -1,0 +1,97 @@
+<ion-content>
+  <app-with-back-button
+    urlToGoBack="/data-templates/create/basic-details"
+    [pageTitle]="dataTemplateName()"
+  >
+    <p-toast position="bottom-center" />
+    <div class="flex flex-col gap-4 min-h-[calc(100vh-103px)]">
+      <div class="flex items-center mt-4">
+        <div class="w-1/2">
+          <span class="text-[var(--gray)]">Plot</span>
+          <p>{{ plotName() }}</p>
+        </div>
+        <div class="w-1/2">
+          <span class="text-[var(--gray)]">Workflow</span>
+          <p>{{ workflowName() }}</p>
+        </div>
+      </div>
+      <form
+        class="mt-4 flex flex-col gap-4 flex-grow pb-8"
+        [formGroup]="formGroup()"
+        (submit)="onSubmit()"
+      >
+        <div class="flex flex-col gap-2">
+          <label for="plot">Select Stage</label>
+          <p-dropdown
+            [filter]="true"
+            id="stage"
+            [options]="availableStagesToSelect()"
+            placeholder="Select Stage"
+            variant="filled"
+            (onChange)="onSelectStage($event)"
+            [formControlName]="'stage'"
+          />
+        </div>
+        @if(constructingForm()){
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] mt-1 w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
+        <p-skeleton height="1.25rem" styleClass="mb-[0.125rem] w-2/5" />
+        <p-skeleton height="2.625rem" styleClass="mb-1 w-full" />
+
+        } @else { @for(field of dynamicFormFields(); track field.id){
+        @if(isInputTextFieldByProcessedField(field)){
+        <div class="flex flex-col gap-2">
+          <label for="plot"> {{field.label}} </label>
+          <input
+            pInputText
+            id="field.id"
+            [id]="field.id"
+            [name]="field.name"
+            [formControlName]="field.valuekey"
+            variant="filled"
+          />
+        </div>
+        } @else if(isInputSelectFieldByProcessedField(field)){
+        <div class="flex flex-col gap-2">
+          <label for="plot"> {{field.label}} </label>
+          <p-dropdown
+            [id]="field.id"
+            [options]="field.options"
+            [filter]="true"
+            [filterBy]="'collectionname'"
+            variant="filled"
+            [optionLabel]="'collectionname'"
+            [formControlName]="field.valuekey"
+          />
+        </div>
+        } } }
+        <footer class="mt-auto">
+          <app-button
+            color="yellow"
+            [block]="true"
+            [disabled]="!formGroup().valid || savingTemplate() || constructingForm()"
+          >
+            <p class="flex items-center">
+              @if(savingTemplate()){
+              <span class="spinner mr-3">
+                <p-progressSpinner
+                  styleClass="w-[1.5rem] h-[1.5rem]"
+                  strokeWidth="2"
+                />
+              </span>
+              } @if(constructingForm()) { {{ 'Please fill all the fields' }} }
+              @else { {{ formGroup().valid ? (savingTemplate() ? 'Submitting
+              ...' : 'Submit') : 'Please fill all the fields' }} }
+            </p>
+          </app-button>
+        </footer>
+      </form>
+    </div>
+  </app-with-back-button>
+</ion-content>

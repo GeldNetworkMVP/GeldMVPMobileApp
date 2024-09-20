@@ -1,0 +1,9 @@
+@if (selectedDataTemplate()) {
+<ion-content>
+  <app-with-back-button
+    urlToGoBack="/data-templates/view"
+    [pageTitle]="selectedDataTemplate()?.templatename"
+  >
+  </app-with-back-button>
+</ion-content>
+}

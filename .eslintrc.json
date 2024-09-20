@@ -42,5 +42,82 @@
       "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     }
-  ]
+  ],
+  "plugins": ["perfectionist"],
+  "rules": {
+    "perfectionist/sort-imports": [
+      "error",
+      {
+        "internalPattern": [
+          "~/**",
+          "@app/*",
+          "@assets/*",
+          "@data-templates/*",
+          "@features/*",
+          "@home/*",
+          "@informational/*",
+          "@shared/*",
+          "@workflows/*",
+          "@plots/*",
+          "@stages/*",
+          "@records/*",
+          "@weather-data/*"
+        ],
+        "customGroups": {
+          "value": {
+            "app": ["@app/**"],
+            "assets": ["@assets/**"],
+            "data-templates": ["@data-templates/**"],
+            "features": ["@features/**"],
+            "home": ["@home/**"],
+            "informational": ["@informational/**"],
+            "shared": ["@shared/**"],
+            "workflows": ["@workflows/**"],
+            "plots": ["@plots/**"],
+            "stages": ["@stages/**"],
+            "records": ["@records/**"],
+            "weather-data": ["@weather-data/**"]
+          },
+          "type": {
+            "app": ["@app/**"],
+            "assets": ["@assets/**"],
+            "data-templates": ["@data-templates/**"],
+            "features": ["@features/**"],
+            "home": ["@home/**"],
+            "informational": ["@informational/**"],
+            "shared": ["@shared/**"],
+            "workflows": ["@workflows/**"],
+            "plots": ["@plots/**"],
+            "stages": ["@stages/**"],
+            "records": ["@records/**"],
+            "weather-data": ["@weather-data/**"],
+            "environments": ["@environments/**"]
+          }
+        },
+        "groups": [
+          "type",
+          ["builtin", "external"],
+          "app",
+          "environments",
+          "assets",
+          "data-templates",
+          "features",
+          "home",
+          "informational",
+          "shared",
+          "workflows",
+          "plots",
+          "stages",
+          "records",
+          "weather-data",
+          "internal-type",
+          "internal",
+          ["parent-type", "sibling-type", "index-type"],
+          ["parent", "sibling", "index"],
+          "object",
+          "unknown"
+        ]
+      }
+    ]
+  }
 }

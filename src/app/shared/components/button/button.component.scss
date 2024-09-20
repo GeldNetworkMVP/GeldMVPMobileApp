@@ -1,0 +1,48 @@
+.app-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+
+
+    &--sm {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+
+
+    &--md {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.15rem;
+    }
+
+    &--lg {
+        padding: 1rem 2rem;
+        font-size: 1.25rem;
+    }
+
+    &--block {
+        width: 100%;
+    }
+
+    &--black {
+        background-color: #000;
+        color: #fff;
+    }
+
+    &--yellow {
+        background-color: var(--yellow);
+        color: #000;
+    }
+
+    &--disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+
+
+// :host(.app-button--block) {
+//     transform: scale(2);
+// }

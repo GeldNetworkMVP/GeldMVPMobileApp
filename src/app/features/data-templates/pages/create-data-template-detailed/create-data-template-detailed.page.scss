@@ -1,0 +1,11 @@
+:host ::ng-deep {
+  .p-dropdown {
+    width: 100%;
+  }
+}
+
+
+.spinner ::ng-deep .p-progress-spinner-circle {
+  stroke: black !important;
+  stroke-width: 4;
+}

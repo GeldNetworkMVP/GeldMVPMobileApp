@@ -31,7 +31,7 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": ["src/assets/styles/setup.css", "src/assets/styles/global.scss", "src/assets/styles/theme/variables.scss"],
             "scripts": []
           },
           "configurations": {
@@ -111,7 +111,7 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": ["src/assets/styles/setup.css", "src/assets/styles/global.scss", "src/assets/styles/theme/variables.scss"],
             "scripts": []
           },
           "configurations": {

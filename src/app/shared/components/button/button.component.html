@@ -1,0 +1,17 @@
+<ng-template #content><ng-content></ng-content></ng-template>
+
+@if (!routerLink()) {
+<button
+  (click)="onClick($event)"
+  class="app-button"
+  [ngClass]="classes()"
+  pRipple
+  [disabled]="disabled()"
+>
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</button>
+} @else {
+<a [routerLink]="routerLink()" class="app-button" [ngClass]="classes()" pRipple>
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</a>
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Geld</string>
+    <string name="title_activity_main">Geld</string>
+    <string name="package_name">com.geld.app</string>
+    <string name="custom_url_scheme">com.geld.app</string>
+</resources>
