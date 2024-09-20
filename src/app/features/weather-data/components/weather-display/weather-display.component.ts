@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { WeatherDataService } from '@weather-data/services/weather-data.service';
 
 import { PreparedWeatherData } from '../../models/prepared-weather-data.model';
-``
+
 @Component({
   selector: 'app-weather-display',
   standalone: true,

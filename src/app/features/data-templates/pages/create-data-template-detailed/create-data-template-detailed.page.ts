@@ -6,11 +6,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Geolocation } from '@capacitor/geolocation';
 import { IonContent } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
+import { MessageService } from 'primeng/api';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ToastModule } from 'primeng/toast';
 import { first, firstValueFrom, Subject } from 'rxjs';
 
 import { DataTemplatesService } from '@data-templates/services/data-templates.service';
@@ -46,9 +50,12 @@ import { NewDataTemplateState } from '../../stores/new-data-template-store/new-d
     InputTextModule,
     ButtonComponent,
     IonContent,
+    ToastModule,
+    ProgressSpinnerModule,
     WithBackButtonLayoutComponent,
     ...commonModules,
   ],
+  providers: [MessageService],
 })
 export class CreateDataTemplateDetailedPage {
   private readonly store = inject(Store);
@@ -58,6 +65,7 @@ export class CreateDataTemplateDetailedPage {
   private readonly recordsService = inject(RecordsService);
   private readonly utilsService = inject(UtilsService);
   private readonly dataTemplatesService = inject(DataTemplatesService);
+  private readonly messageService = inject(MessageService);
 
   // function references
   isInputTextFieldByProcessedField = isInputTextFieldByProcessedField;
@@ -84,6 +92,8 @@ export class CreateDataTemplateDetailedPage {
   );
   constructingForm = signal(false);
   dynamicFormFields = signal<ProcessedInputField[]>([]);
+  selectedStage = signal<StageWithInputFields | null>(null);
+  savingTemplate = signal(false);
 
   constructor() {
     effect(() => {
@@ -99,6 +109,7 @@ export class CreateDataTemplateDetailedPage {
         .getStageByName(value)
         .pipe(first())
         .subscribe(async (stage) => {
+          this.selectedStage.set(stage.Response);
           const processedFields = await this.processInputFields(stage.Response);
           console.log(processedFields);
           this.dynamicFormFields.set(processedFields);
@@ -155,39 +166,69 @@ export class CreateDataTemplateDetailedPage {
         }
       }
 
-      // console.log all the form controls
-      console.log(formGroup.controls);
       this.formGroup.set(formGroup);
     }
   }
 
-
   async onSubmit() {
-    const formValue = {  
+    this.savingTemplate.set(true);
+    const { coords } = await Geolocation.getCurrentPosition();
+
+    const formValue = {
       ...this.formGroup().value,
+      stage: {
+        _id: this.selectedStage()?._id,
+        stagename: this.selectedStage()?.stagename,
+        description: this.selectedStage()?.description,
+      },
       templatename: this.basicDetails()?.name,
       plot: this.basicDetails()?.plot,
       workflow: this.basicDetails()?.workflow,
-      timestamp: new Date().toISOString(),
-      prevHash: null, // sample previous hash
-      currentHash: null, // sample current hash
-      userId: '1234' // sample user ID/
-    }
-
-    delete formValue.name;
+      timestamp: Date.now(),
+      geocoordinates: {
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      },
+      prevHash: null, //TODO: Change later
+      currentHash: null, // TODO: Change later
+      userid: '1234', // TODO: Change later
+    };
 
     const formValueHash = await this.utilsService.getObjectHash(formValue);
 
     const finalFormValue = {
       ...formValue,
-      templateHash: formValueHash
-    }
+      templateHash: formValueHash,
+    };
 
-    this.dataTemplatesService.saveDataTemplate(finalFormValue).subscribe({
-      next(value) {
-        console.log(value);
-      },
-    });
+    this.dataTemplatesService
+      .saveDataTemplate(finalFormValue)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.savingTemplate.set(false);
+          this.formGroup.set(
+            this.formBuilder.group({
+              stage: [null, Validators.required],
+            })
+          );
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Data template created successfully',
+          });
+          this.router.navigate(['/data-templates/view']);
+        },
+        error: (error) => {
+          this.savingTemplate.set(false);
+          console.error('Error saving data template:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error saving data template',
+          });
+        },
+      });
 
     console.log(finalFormValue);
   }

@@ -3,6 +3,7 @@
     urlToGoBack="/data-templates/create/basic-details"
     [pageTitle]="dataTemplateName()"
   >
+    <p-toast position="bottom-center" />
     <div class="flex flex-col gap-4 min-h-[calc(100vh-103px)]">
       <div class="flex items-center mt-4">
         <div class="w-1/2">
@@ -74,9 +75,20 @@
           <app-button
             color="yellow"
             [block]="true"
-            [disabled]="!formGroup().valid"
+            [disabled]="!formGroup().valid || savingTemplate() || constructingForm()"
           >
-            {{ formGroup().valid ? 'Submit' : 'Please fill all the fields' }}
+            <p class="flex items-center">
+              @if(savingTemplate()){
+              <span class="spinner mr-3">
+                <p-progressSpinner
+                  styleClass="w-[1.5rem] h-[1.5rem]"
+                  strokeWidth="2"
+                />
+              </span>
+              } @if(constructingForm()) { {{ 'Please fill all the fields' }} }
+              @else { {{ formGroup().valid ? (savingTemplate() ? 'Submitting
+              ...' : 'Submit') : 'Please fill all the fields' }} }
+            </p>
           </app-button>
         </footer>
       </form>

@@ -11,7 +11,7 @@ export class DataTemplatesService {
     http = inject(HttpClient);
 
     getDataTemplatesOfLoggedInUser() {
-        const tempUserId = "0110" 
+        const tempUserId = "1234" 
         return this.http.get<GetDataTemplatesOfLoggedInUserSuccessfulResponseDto>(
             `${this.apiUrl}/geldtemplate/user/${tempUserId}`
           );

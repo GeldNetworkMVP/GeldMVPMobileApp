@@ -32,8 +32,8 @@ import { SetNewDataTemplateBasicDetails } from '../../stores/new-data-template-s
   ],
 })
 export class CreateDataTemplateBasicDetailsPage {
-  store = inject(Store);
-  router = inject(Router);
+  private readonly store = inject(Store);
+  private readonly router = inject(Router);
 
   availablePlots = this.store.selectSignal(MetadataState.getAvailablePlots);
   availableWorkflows = this.store.selectSignal(MetadataState.getAvailableWorkflows);
