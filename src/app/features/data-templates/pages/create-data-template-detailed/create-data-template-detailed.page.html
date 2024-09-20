@@ -17,6 +17,7 @@
       <form
         class="mt-4 flex flex-col gap-4 flex-grow pb-8"
         [formGroup]="formGroup()"
+        (submit)="onSubmit()"
       >
         <div class="flex flex-col gap-2">
           <label for="plot">Select Stage</label>
@@ -66,7 +67,6 @@
             variant="filled"
             [optionLabel]="'collectionname'"
             [formControlName]="field.valuekey"
-            (onChange)="onValueChange($event, field.valuekey)"
           />
         </div>
         } } }
@@ -74,9 +74,7 @@
           <app-button
             color="yellow"
             [block]="true"
-            (click)="onSubmit()"
             [disabled]="!formGroup().valid"
-            (keydown.enter)="onSubmit()"
           >
             {{ formGroup().valid ? 'Submit' : 'Please fill all the fields' }}
           </app-button>

@@ -16,4 +16,7 @@ export class DataTemplatesService {
             `${this.apiUrl}/geldtemplate/user/${tempUserId}`
           );
     }
+    saveDataTemplate(templateData: any) {
+        return this.http.post(`${this.apiUrl}/geldtemplate/save`, templateData);
+    }
 }

@@ -13,10 +13,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
 import { first, firstValueFrom, Subject } from 'rxjs';
 
+import { DataTemplatesService } from '@data-templates/services/data-templates.service';
+
 import { commonModules } from '@shared/common.modules';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { WithBackButtonLayoutComponent } from '@shared/layouts/with-back-button/with-back-button.layout';
 import { ProcessedInputField } from '@shared/models/processed-input-field.model';
+import { UtilsService } from '@shared/services/utils.service';
 import {
   inputSelectFieldToProcessedInputField,
   inputTextFieldToProcessedInputField,
@@ -28,7 +31,6 @@ import {
 import { StageWithInputFields } from '@stages/models/stage-with-input-fields.model';
 import { StagesService } from '@stages/services/stages.service';
 
-import { Record } from '@records/models/record.model';
 import { RecordsService } from '@records/services/records.service';
 
 import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
@@ -54,6 +56,8 @@ export class CreateDataTemplateDetailedPage {
   private readonly formBuilder = inject(FormBuilder);
   private readonly stagesService = inject(StagesService);
   private readonly recordsService = inject(RecordsService);
+  private readonly utilsService = inject(UtilsService);
+  private readonly dataTemplatesService = inject(DataTemplatesService);
 
   // function references
   isInputTextFieldByProcessedField = isInputTextFieldByProcessedField;
@@ -157,12 +161,34 @@ export class CreateDataTemplateDetailedPage {
     }
   }
 
-  onValueChange(event: DropdownChangeEvent, valuekey: string) {
-    const record = event.value as Record;
-  }
 
-  onSubmit() {
-    // show the values of the form group
-    console.log(this.formGroup().value);
+  async onSubmit() {
+    const formValue = {  
+      ...this.formGroup().value,
+      templatename: this.basicDetails()?.name,
+      plot: this.basicDetails()?.plot,
+      workflow: this.basicDetails()?.workflow,
+      timestamp: new Date().toISOString(),
+      prevHash: null, // sample previous hash
+      currentHash: null, // sample current hash
+      userId: '1234' // sample user ID/
+    }
+
+    delete formValue.name;
+
+    const formValueHash = await this.utilsService.getObjectHash(formValue);
+
+    const finalFormValue = {
+      ...formValue,
+      templateHash: formValueHash
+    }
+
+    this.dataTemplatesService.saveDataTemplate(finalFormValue).subscribe({
+      next(value) {
+        console.log(value);
+      },
+    });
+
+    console.log(finalFormValue);
   }
 }
