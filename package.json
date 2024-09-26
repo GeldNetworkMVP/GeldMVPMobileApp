@@ -40,7 +40,6 @@
     "@ngxs/logger-plugin": "18.1.1",
     "@ngxs/store": "^18.1.1",
     "@stellar/stellar-sdk": "^12.3.0",
-    "expo-random": "^14.0.1",
     "iconify-icon": "^2.1.0",
     "ionicons": "^7.4.0",
     "ngxtension": "^4.0.0",

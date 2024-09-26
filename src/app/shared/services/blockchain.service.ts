@@ -9,7 +9,6 @@ import {
   TimeoutInfinite,
   Horizon
 } from '@stellar/stellar-sdk';
-import * as Random from 'expo-random';
 import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
@@ -22,28 +21,28 @@ export class BlockchainService {
 
   constructor() {}
 
-  // generateKeypair(){
-  //   const randomBytes = Random.getRandomBytes(32);
-  // const keys= Keypair.fromRawEd25519Seed(Buffer.from(randomBytes));
-  // console.log("-----------------",keys.publicKey().toString())
-  // //this.setObject()
-  // }
+  generateKeypair(){
+  const keys= Keypair.random()
+  this.setObject(keys).then(res=>{
+   // this.getObject();
+  })
+  }
 
-  // async setObject() {
-  //   await Preferences.set({
-  //     key: 'user',
-  //     value: JSON.stringify({
-  //       publickey: 1,
-  //       secretkey: 'Max'
-  //     })
-  //   });
-  // }
+  async setObject(keys:Keypair) {
+    await Preferences.set({
+      key: 'John Doe',//TODO: Change value
+      value: JSON.stringify({
+        Keypair: keys,
+      })
+    });
+  }
   
   
-  // async getObject() {
-  //   const ret = await Preferences.get({ key: 'user' });
-  //   const user = JSON.parse(ret.value);
-  // }
+  async getObject() {
+    const ret = await Preferences.get({ key: 'John Doe' });
+    const keypair = JSON.parse(ret.value?? "No value set");
+    console.log("value ",keypair)
+  }
 
   getBlockchainNetType() {
     if (this.blockchainType === 'live') {
@@ -63,10 +62,10 @@ export class BlockchainService {
     geoData: string,
     appID: string
   ) {
-    //this.generateKeypair()
+    this.generateKeypair()
     let appKeyPair = Keypair.fromSecret(
       'SACEYGMZEJ3S2SIAVYKYROOTOELZDAP3GTAHY7LZ45QQAR6XPGRKSCYB'
-    );
+    );//TODO : remove this
     let sequence
     let server = new Horizon.Server(this.blockchainNetwork)
     server
