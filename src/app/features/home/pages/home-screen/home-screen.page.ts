@@ -3,6 +3,8 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   inject,
+  OnInit,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
@@ -15,6 +17,7 @@ import {
   IonMenuToggle,
   IonButton,
 } from '@ionic/angular/standalone';
+import { SafeArea } from 'capacitor-plugin-safe-area';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
@@ -23,7 +26,6 @@ import { timer } from 'rxjs';
 import { WeatherDisplayComponent } from '@app/features/weather-data/components/weather-display/weather-display.component';
 
 import { SideNavItem } from '@features/home/types/side-nav-item.type';
-
 
 @Component({
   selector: 'app-home-screen',
@@ -47,8 +49,19 @@ import { SideNavItem } from '@features/home/types/side-nav-item.type';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
 })
-export class HomeScreenPage {
+export class HomeScreenPage implements OnInit {
   private readonly router = inject(Router);
+
+  topHeight = signal(0);
+
+  constructor() {}
+
+  ngOnInit(): void {
+    SafeArea.getStatusBarHeight().then(({statusBarHeight}) => {
+      this.topHeight.set(statusBarHeight);
+    });
+  }
+
   @ViewChild(IonMenu) menu!: IonMenu;
 
   goTo(route: string) {

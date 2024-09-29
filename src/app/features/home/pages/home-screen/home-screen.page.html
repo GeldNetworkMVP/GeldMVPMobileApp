@@ -1,7 +1,9 @@
 <ion-menu contentId="sidebar-content">
   <ion-content>
-    <aside class="p-4">
-      <div class="flex justify-end mt-8">
+    <aside class="p-4 pt-0">
+      <div class="flex justify-end"
+      [style]="{marginTop: topHeight()+'px'}"
+      >
         <ion-menu-toggle>
           <button>
             <iconify-icon class="text-[1.75rem]" icon="lucide:x" />
@@ -41,7 +43,8 @@
 <div class="ion-page" id="sidebar-content">
   <ion-content [fullscreen]="true">
     <header
-      class="text-[var(--light-gray)] bg-[var(--dark-green)] pt-12 pb-10 px-4"
+      class="text-[var(--light-gray)] bg-[var(--dark-green)] pb-10 px-4"
+      [style]="{paddingTop: topHeight()+'px'}"
     >
       <ion-menu-toggle>
         <button>
@@ -51,7 +54,10 @@
       <div class="flex mt-2 justify-between items-center">
         <h1 style="line-height: 210%">
           <span class="text-[24px]"> Good Morning, </span>
-          <span class="block font-[700] text-[48px]">John Doe.</span>
+          <span class="block font-[700] text-[48px]">
+            <!-- John Doe. -->
+             {{topHeight()}}
+          </span>
         </h1>
         <img
           src="assets/images/geld-logo-1.png"

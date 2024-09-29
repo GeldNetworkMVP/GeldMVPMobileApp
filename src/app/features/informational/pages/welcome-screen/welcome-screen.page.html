@@ -2,7 +2,9 @@
   <main
     class="bg-[var(--dark-green)] w-screen h-screen overflow-hidden flex flex-col justify-between pb-8 px-4 text-[var(--light-gray)]"
   >
-    <div class="flex flex-col gap-4 mt-10">
+    <div class="flex flex-col gap-4"
+    [style]="{marginTop: topHeight()+'px'}"
+    >
       <img src="assets/images/geld-logo-1.png" class="w-[105px] h-[70px]" alt="Geld Logo">
       <h1 class="text-[36px] sm:text-[40px] font-[700]" style="line-height: 122%;">
         Welcome to Geld.Network
