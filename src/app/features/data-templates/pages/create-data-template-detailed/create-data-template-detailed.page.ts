@@ -1,4 +1,4 @@
-import { Component, inject, signal, effect } from '@angular/core';
+import { Component, inject, signal, effect, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { IonContent } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
+import { SafeArea } from 'capacitor-plugin-safe-area';
 import { MessageService } from 'primeng/api';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -57,7 +58,7 @@ import { NewDataTemplateState } from '../../stores/new-data-template-store/new-d
   ],
   providers: [MessageService],
 })
-export class CreateDataTemplateDetailedPage {
+export class CreateDataTemplateDetailedPage implements OnInit {
   private readonly store = inject(Store);
   private readonly router = inject(Router);
   private readonly formBuilder = inject(FormBuilder);
@@ -94,6 +95,15 @@ export class CreateDataTemplateDetailedPage {
   dynamicFormFields = signal<ProcessedInputField[]>([]);
   selectedStage = signal<StageWithInputFields | null>(null);
   savingTemplate = signal(false);
+
+
+  pageHeight = signal('');
+
+  ngOnInit(): void {
+    SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
+      this.pageHeight.set(`calc(100vh - ${100 + statusBarHeight}px)`);
+    });
+  }
 
   constructor() {
     effect(() => {
