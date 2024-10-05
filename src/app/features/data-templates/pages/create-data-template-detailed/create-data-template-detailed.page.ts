@@ -39,6 +39,8 @@ import { StagesService } from '@stages/services/stages.service';
 import { RecordsService } from '@records/services/records.service';
 
 import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
+import { BlockchainService } from '@shared/services/blockchain.service';
+import config from 'capacitor.config';
 
 @Component({
   selector: 'app-create-data-template-detailed',
@@ -67,6 +69,7 @@ export class CreateDataTemplateDetailedPage implements OnInit {
   private readonly utilsService = inject(UtilsService);
   private readonly dataTemplatesService = inject(DataTemplatesService);
   private readonly messageService = inject(MessageService);
+  private readonly blockchainService = inject(BlockchainService);
 
   // function references
   isInputTextFieldByProcessedField = isInputTextFieldByProcessedField;
@@ -200,46 +203,61 @@ export class CreateDataTemplateDetailedPage implements OnInit {
         longitude: coords.longitude,
       },
       prevHash: null, //TODO: Change later
-      currentHash: null, // TODO: Change later
+      // currentHash: null, // TODO: Change later
       userid: '1234', // TODO: Change later
     };
 
     const formValueHash = await this.utilsService.getObjectHash(formValue);
+    try {
+      const txnHash = await this.blockchainService.xdrBuildForFormSubmission(
+        this.basicDetails()?.name ?? 'No template name defined',
+        this.basicDetails()?.workflow.workflowname ?? 'No workflow defined',
+        this.selectedStage()?.stagename ?? 'No Stage defined',
+        formValueHash,
+        '',
+        Date.now(),
+        coords.latitude + 'and' + coords.longitude,
+        config.appId ?? 'No appID defined'
+      );
 
-    const finalFormValue = {
-      ...formValue,
-      templateHash: formValueHash,
-    };
+      const finalFormValue = {
+        ...formValue,
+        templateHash: formValueHash,
+        currentHash: txnHash,
+      };
 
-    this.dataTemplatesService
-      .saveDataTemplate(finalFormValue)
-      .pipe(first())
-      .subscribe({
-        next: () => {
-          this.savingTemplate.set(false);
-          this.formGroup.set(
-            this.formBuilder.group({
-              stage: [null, Validators.required],
-            })
-          );
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Data template created successfully',
-          });
-          this.router.navigate(['/data-templates/view']);
-        },
-        error: (error) => {
-          this.savingTemplate.set(false);
-          console.error('Error saving data template:', error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Error saving data template',
-          });
-        },
-      });
+      this.dataTemplatesService
+        .saveDataTemplate(finalFormValue)
+        .pipe(first())
+        .subscribe({
+          next: () => {
+            this.savingTemplate.set(false);
+            this.formGroup.set(
+              this.formBuilder.group({
+                stage: [null, Validators.required],
+              })
+            );
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Data template created successfully',
+            });
+            this.router.navigate(['/data-templates/view']);
+          },
+          error: (error) => {
+            this.savingTemplate.set(false);
+            console.error('Error saving data template:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error saving data template',
+            });
+          },
+        });
 
-    console.log(finalFormValue);
+      console.log(finalFormValue);
+    } catch (error) {
+      console.error('Error submitting transaction:', error);
+    }
   }
 }
