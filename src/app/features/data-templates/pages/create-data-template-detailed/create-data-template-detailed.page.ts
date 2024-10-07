@@ -10,6 +10,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { IonContent } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
 import { SafeArea } from 'capacitor-plugin-safe-area';
+import config from 'capacitor.config';
 import { MessageService } from 'primeng/api';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -24,6 +25,7 @@ import { commonModules } from '@shared/common.modules';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { WithBackButtonLayoutComponent } from '@shared/layouts/with-back-button/with-back-button.layout';
 import { ProcessedInputField } from '@shared/models/processed-input-field.model';
+import { BlockchainService } from '@shared/services/blockchain.service';
 import { UtilsService } from '@shared/services/utils.service';
 import {
   inputSelectFieldToProcessedInputField,
@@ -39,8 +41,6 @@ import { StagesService } from '@stages/services/stages.service';
 import { RecordsService } from '@records/services/records.service';
 
 import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
-import { BlockchainService } from '@shared/services/blockchain.service';
-import config from 'capacitor.config';
 
 @Component({
   selector: 'app-create-data-template-detailed',
