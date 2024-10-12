@@ -30,6 +30,7 @@
             variant="filled"
             (onChange)="onSelectStage($event)"
             [formControlName]="'stage'"
+            appendTo="body"
           />
         </div>
         @if(constructingForm()){
@@ -68,6 +69,7 @@
             variant="filled"
             [optionLabel]="'collectionname'"
             [formControlName]="field.valuekey"
+            appendTo="body"
           />
         </div>
         } } }

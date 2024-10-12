@@ -1,0 +1,36 @@
+<ion-content>
+  <app-with-back-button
+    urlToGoBack="/login-or-register"
+    pageTitle="Welcome Back!"
+  >
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col mt-8"
+      [style]="{height: pageHeight()}"
+    >
+      <div>
+        <h2 class="text-[20px]">Sign in as</h2>
+        <span class="text-[20px] text-[#18794E]"> {{ 'johndoe@gmai.com' }}</span>
+      </div>
+      <div class="flex flex-col gap-2 mt-4">
+        <label for="password">Enter your password to login</label>
+        <input
+          id="password"
+          type="password"
+          pInputText
+          formControlName="password"
+          variant="filled"
+        />
+        @if(form.get('password')?.invalid && form.get('password')?.touched) {
+        <small class="text-red-500"> Password is required </small>
+        }
+      </div>
+      <footer class="mt-auto">
+        <app-button color="yellow" [block]="true" [disabled]="form.invalid">
+          {{ form.valid ? 'Continue' : 'Please enter password' }}
+        </app-button>
+      </footer>
+    </form>
+  </app-with-back-button>
+</ion-content>

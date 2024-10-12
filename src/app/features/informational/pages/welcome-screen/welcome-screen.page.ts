@@ -6,6 +6,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { Browser } from '@capacitor/browser';
 import { IonContent } from '@ionic/angular/standalone';
@@ -24,6 +25,7 @@ import { ButtonComponent } from '@shared/components/button/button.component';
 })
 export class WelcomeScreenPage implements OnInit {
   authService = inject(AuthService);
+  router = inject(Router);
   topHeight = signal(0);
 
   ngOnInit(): void {
@@ -33,12 +35,13 @@ export class WelcomeScreenPage implements OnInit {
   }
 
   login() {
-    this.authService
-      .loginWithRedirect({
-        async openUrl(url: string) {
-          await Browser.open({ url, windowName: '_self' });
-        },
-      })
-      .subscribe();
+    // this.authService
+    //   .loginWithRedirect({
+    //     async openUrl(url: string) {
+    //       await Browser.open({ url, windowName: '_self' });
+    //     },
+    //   })
+    //   .subscribe();
+    this.router.navigate(['/login-or-register']);
   }
 }

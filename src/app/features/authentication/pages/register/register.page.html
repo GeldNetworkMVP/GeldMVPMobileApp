@@ -1,34 +1,59 @@
 <ion-content [fullscreen]="true">
-  <app-with-back-button urlToGoBack="/home" pageTitle="Create Data Template">
+  <app-with-back-button
+    urlToGoBack="/login-or-register"
+    pageTitle="Create Your Account"
+  >
     <div class="flex flex-col gap-4" [style]="{height: pageHeight()}">
-      <p class="mt-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-        finibus ullamcorper diam nec iaculis. *Explanation about whats a Data
-        Template*
-      </p>
       <form
-        [formGroup]="createDataTemplateBasicDetailsFormGroup"
+        [formGroup]="profileFormGroup"
         class="mt-2 flex flex-col gap-4 flex-grow pb-8"
         (ngSubmit)="onSubmit()"
       >
         <div class="flex flex-col gap-2">
-          <label for="dataTemplateName">Data Template Name</label>
+          <label for="dataTemplateName">Email Address</label>
           <input
-            id="dataTemplateName"
-            type="text"
+            id="email"
+            type="email"
             pInputText
-            formControlName="dataTemplateName"
-            placeholder="DT0001"
+            formControlName="email"
+            placeholder="Enter your email"
             variant="filled"
           />
-          @if(createDataTemplateBasicDetailsFormGroup.get('dataTemplateName')?.invalid
-          &&
-          createDataTemplateBasicDetailsFormGroup.get('dataTemplateName')?.touched)
-          {
+          @if(profileFormGroup.get('email')?.invalid &&
+          profileFormGroup.get('email')?.touched) {
           <small class="text-red-500"> Data Template Name is required </small>
           }
         </div>
-        <div class="flex flex-col gap-2">
+        <app-country-code-telephone-input [form]="contactNumberFormGroup" />
+        <div class="flex flex-col gap-2 mt-4">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            pInputText
+            formControlName="password"
+            variant="filled"
+          />
+          @if(profileFormGroup.get('password')?.invalid &&
+          profileFormGroup.get('password')?.touched) {
+          <small class="text-red-500"> Password is required </small>
+          }
+        </div>
+        <div class="flex flex-col gap-2 mt-4">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            pInputText
+            formControlName="confirmPassword"
+            variant="filled"
+          />
+          @if(profileFormGroup.get('confirmPassword')?.invalid &&
+          profileFormGroup.get('confirmPassword')?.touched) {
+          <small class="text-red-500"> Confirm password and password must match </small>
+          }
+        </div>
+        <!-- <div class="flex flex-col gap-2">
           <label for="plot">Select Plot</label>
           <p-dropdown
             [filter]="true"
@@ -39,7 +64,6 @@
             optionLabel="collectionname"
             placeholder="Select Plot"
             variant="filled"
-            appendTo="body"
           />
           @if(createDataTemplateBasicDetailsFormGroup.get('plot')?.invalid &&
           createDataTemplateBasicDetailsFormGroup.get('plot')?.touched) {
@@ -57,21 +81,20 @@
             optionLabel="workflowname"
             placeholder="Select Workflow"
             variant="filled"
-            appendTo="body"
           />
           @if(createDataTemplateBasicDetailsFormGroup.get('workflow')?.invalid
           && createDataTemplateBasicDetailsFormGroup.get('workflow')?.touched) {
           <small class="text-red-500"> Workflow is required </small>
           }
-        </div>
+        </div> -->
         <footer class="mt-auto">
           <app-button
             color="yellow"
             [block]="true"
-            [disabled]="createDataTemplateBasicDetailsFormGroup.invalid"
+            [disabled]="profileFormGroup.invalid"
           >
-            {{ createDataTemplateBasicDetailsFormGroup.valid ? 'Next' : 'Please
-            fill all the fields' }}
+            {{ profileFormGroup.valid ? 'Sign Up' : 'Please fill all the
+            fields' }}
           </app-button>
         </footer>
       </form>
