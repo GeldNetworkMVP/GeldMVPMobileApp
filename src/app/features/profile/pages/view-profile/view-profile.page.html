@@ -1,5 +1,8 @@
 <ion-content [fullscreen]="true">
-  <app-with-back-button urlToGoBack="/home" pageTitle="Edit Profile">
+  <app-with-back-button
+    urlToGoBack="/home"
+    pageTitle="Edit Profile"
+  >
     <div class="flex flex-col gap-4" [style]="{height: pageHeight()}">
       <form
         [formGroup]="profileFormGroup"
@@ -21,48 +24,62 @@
           <small class="text-red-500"> Data Template Name is required </small>
           }
         </div>
-        <!-- <div class="flex flex-col gap-2">
-          <label for="plot">Select Plot</label>
+        <app-country-code-telephone-input [form]="contactNumberFormGroup" />
+        <div class="flex flex-col gap-2 w-full">
+          <label for="designation">Designation</label>
           <p-dropdown
             [filter]="true"
-            [filterBy]="'collectionname'"
-            id="plot"
-            formControlName="plot"
-            [options]="availablePlots()"
-            optionLabel="collectionname"
-            placeholder="Select Plot"
+            id="designation"
+            formControlName="designation"
+            [options]="designationOptions"
+            placeholder="Select Designation"
             variant="filled"
+            appendTo="body"
+            styleClass="w-full"
           />
-          @if(createDataTemplateBasicDetailsFormGroup.get('plot')?.invalid &&
-          createDataTemplateBasicDetailsFormGroup.get('plot')?.touched) {
-          <small class="text-red-500"> Plot is required </small>
+          @if(profileFormGroup.get('designation')?.invalid &&
+          profileFormGroup.get('designation')?.touched) {
+          <small class="text-red-500"> Designation is required </small>
           }
         </div>
         <div class="flex flex-col gap-2">
-          <label for="workflow">Select Workflow</label>
-          <p-dropdown
-            id="workflow"
-            [filter]="true"
-            [filterBy]="'workflowname'"
-            formControlName="workflow"
-            [options]="availableWorkflows()"
-            optionLabel="workflowname"
-            placeholder="Select Workflow"
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            pInputText
+            formControlName="password"
             variant="filled"
           />
-          @if(createDataTemplateBasicDetailsFormGroup.get('workflow')?.invalid
-          && createDataTemplateBasicDetailsFormGroup.get('workflow')?.touched) {
-          <small class="text-red-500"> Workflow is required </small>
+          @if(profileFormGroup.get('password')?.invalid &&
+          profileFormGroup.get('password')?.touched) {
+          <small class="text-red-500"> Password is required </small>
           }
-        </div> -->
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            pInputText
+            formControlName="confirmPassword"
+            variant="filled"
+          />
+          @if(profileFormGroup.get('confirmPassword')?.invalid &&
+          profileFormGroup.get('confirmPassword')?.touched) {
+          <small class="text-red-500">
+            Confirm password and password must match
+          </small>
+          }
+        </div>
         <footer class="mt-auto">
           <app-button
             color="yellow"
             [block]="true"
             [disabled]="profileFormGroup.invalid"
           >
-            {{ profileFormGroup.valid ? 'Save Changes' : 'Please fill all the
-            fields' }}
+            {{ profileFormGroup.valid ? 'Sign Up' : 'Please fill all the fields'
+            }}
           </app-button>
         </footer>
       </form>

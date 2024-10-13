@@ -25,7 +25,24 @@
           }
         </div>
         <app-country-code-telephone-input [form]="contactNumberFormGroup" />
-        <div class="flex flex-col gap-2 mt-4">
+        <div class="flex flex-col gap-2 w-full">
+          <label for="designation">Designation</label>
+          <p-dropdown
+            [filter]="true"
+            id="designation"
+            formControlName="designation"
+            [options]="designationOptions"
+            placeholder="Select Designation"
+            variant="filled"
+            appendTo="body"
+            styleClass="w-full"
+          />
+          @if(profileFormGroup.get('designation')?.invalid &&
+          profileFormGroup.get('designation')?.touched) {
+          <small class="text-red-500"> Designation is required </small>
+          }
+        </div>
+        <div class="flex flex-col gap-2">
           <label for="password">Password</label>
           <input
             id="password"
@@ -39,7 +56,7 @@
           <small class="text-red-500"> Password is required </small>
           }
         </div>
-        <div class="flex flex-col gap-2 mt-4">
+        <div class="flex flex-col gap-2">
           <label for="confirmPassword">Confirm Password</label>
           <input
             id="confirmPassword"
@@ -50,51 +67,19 @@
           />
           @if(profileFormGroup.get('confirmPassword')?.invalid &&
           profileFormGroup.get('confirmPassword')?.touched) {
-          <small class="text-red-500"> Confirm password and password must match </small>
+          <small class="text-red-500">
+            Confirm password and password must match
+          </small>
           }
         </div>
-        <!-- <div class="flex flex-col gap-2">
-          <label for="plot">Select Plot</label>
-          <p-dropdown
-            [filter]="true"
-            [filterBy]="'collectionname'"
-            id="plot"
-            formControlName="plot"
-            [options]="availablePlots()"
-            optionLabel="collectionname"
-            placeholder="Select Plot"
-            variant="filled"
-          />
-          @if(createDataTemplateBasicDetailsFormGroup.get('plot')?.invalid &&
-          createDataTemplateBasicDetailsFormGroup.get('plot')?.touched) {
-          <small class="text-red-500"> Plot is required </small>
-          }
-        </div>
-        <div class="flex flex-col gap-2">
-          <label for="workflow">Select Workflow</label>
-          <p-dropdown
-            id="workflow"
-            [filter]="true"
-            [filterBy]="'workflowname'"
-            formControlName="workflow"
-            [options]="availableWorkflows()"
-            optionLabel="workflowname"
-            placeholder="Select Workflow"
-            variant="filled"
-          />
-          @if(createDataTemplateBasicDetailsFormGroup.get('workflow')?.invalid
-          && createDataTemplateBasicDetailsFormGroup.get('workflow')?.touched) {
-          <small class="text-red-500"> Workflow is required </small>
-          }
-        </div> -->
         <footer class="mt-auto">
           <app-button
             color="yellow"
             [block]="true"
             [disabled]="profileFormGroup.invalid"
           >
-            {{ profileFormGroup.valid ? 'Sign Up' : 'Please fill all the
-            fields' }}
+            {{ profileFormGroup.valid ? 'Sign Up' : 'Please fill all the fields'
+            }}
           </app-button>
         </footer>
       </form>

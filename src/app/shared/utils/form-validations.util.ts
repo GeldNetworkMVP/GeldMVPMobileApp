@@ -1,4 +1,6 @@
 import { ValidatorFn } from '@angular/forms';
+
+import { DESIGNATIONS } from '@shared/constants/designations.constant';
 export const matchValidator = (
   control1Name: string,
   control2Name: string
@@ -18,3 +20,14 @@ export const matchValidator = (
     }
   };
 };
+
+
+export const designationValidator = (): ValidatorFn => {
+  return (control) => {
+    if (!DESIGNATIONS.includes(control.value)) {
+      return { invalidDesignation: true };
+    } else {
+      return null;
+    }
+  };
+}
