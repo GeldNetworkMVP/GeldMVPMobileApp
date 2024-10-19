@@ -1,4 +1,5 @@
 import {
+  HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
@@ -18,7 +19,10 @@ import {
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { withNgxsLoggerPlugin } from '@ngxs/logger-plugin';
 import { provideStore } from '@ngxs/store';
-import { PrimeNGConfig } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
+
+import { AuthInterceptor } from '@features/authentication/interceptors/auth.interceptor';
+import { AuthState } from '@features/authentication/stores/auth-store/auth.state';
 
 import config from '../../capacitor.config';
 import { appRoutes } from './app.routes';
@@ -32,6 +36,12 @@ const initializePrimeNGConfig = (primeConfig: PrimeNGConfig) => () => {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    MessageService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializePrimeNGConfig,
@@ -58,7 +68,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
     provideStore(
-      [MetadataState],
+      [MetadataState, AuthState],
       withNgxsReduxDevtoolsPlugin(),
       withNgxsLoggerPlugin()
     ),

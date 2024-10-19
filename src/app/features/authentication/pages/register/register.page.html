@@ -10,6 +10,21 @@
         (ngSubmit)="onSubmit()"
       >
         <div class="flex flex-col gap-2">
+          <label for="dataTemplateName">Username</label>
+          <input
+            id="username"
+            type="username"
+            pInputText
+            formControlName="username"
+            placeholder="Enter your username"
+            variant="filled"
+          />
+          @if(profileFormGroup.get('username')?.invalid &&
+          profileFormGroup.get('username')?.touched) {
+          <small class="text-red-500"> Username is required </small>
+          }
+        </div>
+        <div class="flex flex-col gap-2">
           <label for="dataTemplateName">Email Address</label>
           <input
             id="email"
@@ -21,7 +36,7 @@
           />
           @if(profileFormGroup.get('email')?.invalid &&
           profileFormGroup.get('email')?.touched) {
-          <small class="text-red-500"> Data Template Name is required </small>
+          <small class="text-red-500"> Email is required </small>
           }
         </div>
         <app-country-code-telephone-input [form]="contactNumberFormGroup" />
@@ -86,3 +101,5 @@
     </div>
   </app-with-back-button>
 </ion-content>
+
+<p-toast />

@@ -14,7 +14,7 @@
           alt="John Doe"
           class="w-[55px] h-[55px] rounded-full"
         />
-        <p class="text-[24px] font-[700]">John Doe</p>
+        <p class="text-[24px] font-[700]">{{profile()?.email}}</p>
       </div>
       <nav class="mt-12">
         <ul class="flex flex-col">
@@ -51,7 +51,9 @@
       <div class="flex mt-2 justify-between items-center">
         <h1 style="line-height: 210%">
           <span class="text-[24px]"> Good Morning, </span>
-          <span class="block font-[700] text-[48px]"> John Doe. </span>
+          <span class="block font-[700] text-[48px]">
+            {{profile()?.email }}
+          </span>
         </h1>
         <img
           src="assets/images/geld-logo-1.png"

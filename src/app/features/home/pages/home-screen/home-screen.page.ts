@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { Preferences } from '@capacitor/preferences';
 import {
   IonToolbar,
   IonHeader,
@@ -17,6 +18,7 @@ import {
   IonMenuToggle,
   IonButton,
 } from '@ionic/angular/standalone';
+import { Store } from '@ngxs/store';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -25,7 +27,10 @@ import { timer } from 'rxjs';
 
 import { WeatherDisplayComponent } from '@app/features/weather-data/components/weather-display/weather-display.component';
 
+import { AuthState } from '@features/authentication/stores/auth-store/auth.state';
 import { SideNavItem } from '@features/home/types/side-nav-item.type';
+
+import { MetadataService } from '@shared/services/metadata.service';
 
 @Component({
   selector: 'app-home-screen',
@@ -50,16 +55,22 @@ import { SideNavItem } from '@features/home/types/side-nav-item.type';
   standalone: true,
 })
 export class HomeScreenPage implements OnInit {
+  private readonly metadataService = inject(MetadataService);
   private readonly router = inject(Router);
+  private readonly store = inject(Store);
+
+  profile = this.store.selectSignal(AuthState.getProfile);
 
   topHeight = signal(0);
 
   constructor() {}
 
   ngOnInit(): void {
-    SafeArea.getStatusBarHeight().then(({statusBarHeight}) => {
+    SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
       this.topHeight.set(statusBarHeight);
     });
+
+    this.metadataService.setMetadata();
   }
 
   @ViewChild(IonMenu) menu!: IonMenu;
@@ -70,7 +81,12 @@ export class HomeScreenPage implements OnInit {
   }
 
   logout() {
-    console.log('logout');
+    return () => {
+      Preferences.remove({ key: 'token' }).then(() => {
+        this.router.navigate(['/welcome']);
+      });
+      timer(500).subscribe(() => this.menu.close());
+    };
   }
 
   sideNavItems: SideNavItem[] = [
@@ -88,7 +104,7 @@ export class HomeScreenPage implements OnInit {
     },
     {
       label: 'Logout',
-      action: this.logout,
+      action: this.logout(),
       icon: 'lucide:log-out',
     },
   ];

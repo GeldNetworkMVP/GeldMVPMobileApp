@@ -41,6 +41,7 @@
     "@ngxs/logger-plugin": "18.1.1",
     "@ngxs/store": "^18.1.1",
     "@stellar/stellar-sdk": "^12.3.0",
+    "axios": "^1.7.7",
     "capacitor-plugin-safe-area": "^3.0.3",
     "iconify-icon": "^2.1.0",
     "ionicons": "^7.4.0",
