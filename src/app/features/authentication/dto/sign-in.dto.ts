@@ -9,4 +9,5 @@ export interface SignInResponseDto {
   contact: string;
   designation: string;
   email: string;
+  userid: string
 }

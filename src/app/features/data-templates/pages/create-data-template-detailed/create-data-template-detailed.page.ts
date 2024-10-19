@@ -21,6 +21,8 @@ import { first, firstValueFrom, Subject } from 'rxjs';
 
 import { DataTemplatesService } from '@data-templates/services/data-templates.service';
 
+import { AuthState } from '@features/authentication/stores/auth-store/auth.state';
+
 import { commonModules } from '@shared/common.modules';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { WithBackButtonLayoutComponent } from '@shared/layouts/with-back-button/with-back-button.layout';
@@ -85,6 +87,7 @@ export class CreateDataTemplateDetailedPage implements OnInit {
   availableStagesToSelect = this.store.selectSignal(
     NewDataTemplateState.getAvailableStagesToSelect
   );
+  profile = this.store.selectSignal(AuthState.getProfile)
 
   destroy$ = new Subject();
 
@@ -204,7 +207,7 @@ export class CreateDataTemplateDetailedPage implements OnInit {
       },
       prevHash: null, //TODO: Change later
       // currentHash: null, // TODO: Change later
-      userid: '1234', // TODO: Change later
+      userid: this.profile()?.userid,
     };
 
     const formValueHash = await this.utilsService.getObjectHash(formValue);

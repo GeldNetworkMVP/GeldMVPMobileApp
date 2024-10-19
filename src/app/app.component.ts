@@ -34,10 +34,11 @@ export class AppComponent implements OnInit {
       .value as string;
     const contact = (await Preferences.get({ key: 'contact' })).value as string;
     const company = (await Preferences.get({ key: 'company' })).value as string;
+    const userid = (await Preferences.get({ key: 'userid' })).value as string;
 
     if (token) {
       this.store.dispatch(
-        new SetProfile({ email, designation, contact, company })
+        new SetProfile({ email, designation, contact, company, userid })
       );
       this.router.navigate(['/home']);
     } else {
