@@ -20,12 +20,14 @@ export class CountryCodeInputComponent implements OnInit {
     }>
   >();
 
-  defaultCountryCode = input<string>('GB');
-
   ngOnInit() {
-    if (!this.form().get('countryCode')?.value) {
-      this.form().get('countryCode')?.setValue(this.defaultCountryCode());
-    }
+    const countryCodeControl = this.form().get('countryCode');
+    const numberControl = this.form().get('number');
+    console.log(countryCodeControl, numberControl);
+
+    this.form().valueChanges.subscribe((value) => {
+      console.log(value);
+    });
   }
 
   onCountryChange(country: ICountry) {

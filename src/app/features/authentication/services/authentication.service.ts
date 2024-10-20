@@ -6,7 +6,7 @@ import { Store } from '@ngxs/store';
 import { tap } from 'rxjs';
 
 import { CheckUserExistenceResponseDto } from '../dto/check-user-existence-response.dto';
-import { SaveUserDto } from '../dto/save-user.dto';
+import { SaveUserDto, UpdateUserDto } from '../dto/save-user.dto';
 import { SignInDto, SignInResponseDto } from '../dto/sign-in.dto';
 import { SetProfile } from '../stores/auth-store/auth.actions';
 
@@ -19,6 +19,10 @@ export class AuthenticationService {
 
   registerUser(dto: SaveUserDto) {
     return this.http.post(`${this.apiUrl}/appuser/save`, dto);
+  }
+
+  updateProfile(dto: UpdateUserDto) {
+    return this.http.put(`${this.apiUrl}/updateuser`, dto);
   }
 
   doesUserExist(email: string) {

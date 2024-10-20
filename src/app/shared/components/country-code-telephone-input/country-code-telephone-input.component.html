@@ -12,7 +12,6 @@
   hideCode: true,
 
 }"
-      [selectedCountryCode]="defaultCountryCode()"
       (onCountryChange)="onCountryChange($event)"
     ></lib-country-list>
 
@@ -24,6 +23,7 @@
       variant="filled"
       class="w-full"
       (change)="onNumberChange($event)"
+      [defaultValue]="form().get('number')?.value"
     />
   </div>
 </div>

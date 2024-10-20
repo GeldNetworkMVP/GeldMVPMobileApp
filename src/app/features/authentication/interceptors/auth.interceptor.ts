@@ -28,6 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
       '/userexists',
       '/usersignin',
       '/v1/current.json',
+      '/updateuser'
     ]; // URLs to exclude from prefix and token
 
     // if your getAuthToken() function declared as "async getAuthToken() {}"
