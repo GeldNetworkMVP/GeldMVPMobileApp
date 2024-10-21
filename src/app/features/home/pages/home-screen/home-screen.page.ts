@@ -31,6 +31,8 @@ import { AuthState } from '@features/authentication/stores/auth-store/auth.state
 import { SideNavItem } from '@features/home/types/side-nav-item.type';
 
 import { MetadataService } from '@shared/services/metadata.service';
+import { Keypair } from 'stellar-sdk';
+import { AuthenticationService } from '@features/authentication/services/authentication.service';
 
 @Component({
   selector: 'app-home-screen',
@@ -55,6 +57,7 @@ import { MetadataService } from '@shared/services/metadata.service';
   standalone: true,
 })
 export class HomeScreenPage implements OnInit {
+  authenticationService = inject(AuthenticationService);
   private readonly metadataService = inject(MetadataService);
   private readonly router = inject(Router);
   private readonly store = inject(Store);
@@ -65,11 +68,24 @@ export class HomeScreenPage implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
       this.topHeight.set(statusBarHeight);
-    });
-
+    })
+    const email = (await Preferences.get({ key: 'email' })).value as string;
+    const { value } = await Preferences.get({ key: email });
+    if (!value) {
+      let keypair = Keypair.random();
+      await this.authenticationService.activateAccount(keypair.publicKey()).subscribe(async res=>{
+        await Preferences.set({
+          key: email,
+          value: JSON.stringify({
+            publicKey: keypair.publicKey(),
+            secret: keypair.secret(),
+          }),
+        });
+      })
+    }
     this.metadataService.setMetadata();
   }
 

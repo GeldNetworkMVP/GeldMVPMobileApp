@@ -46,4 +46,11 @@ export class AuthenticationService {
         })
       );
   }
+
+  activateAccount(publickey: string) {
+    return this.http.get<string>(
+      `${this.apiUrl}/account/activate/${publickey}`
+    );
+  }
 }
+
