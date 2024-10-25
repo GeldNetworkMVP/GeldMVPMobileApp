@@ -103,6 +103,7 @@ export class RegisterPage implements OnInit {
         email: formValue.email as string,
         encpw: formValue.password as string,
         username: formValue.username as string,
+        status: "pending"
       }
 
       this.authenticationService.registerUser(dto).subscribe({
