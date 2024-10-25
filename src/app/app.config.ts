@@ -17,7 +17,7 @@ import {
   provideIonicAngular,
 } from '@ionic/angular/standalone';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
-import { withNgxsLoggerPlugin } from '@ngxs/logger-plugin';
+// import { withNgxsLoggerPlugin } from '@ngxs/logger-plugin';
 import { provideStore } from '@ngxs/store';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 
@@ -70,7 +70,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(
       [MetadataState, AuthState],
       withNgxsReduxDevtoolsPlugin(),
-      withNgxsLoggerPlugin()
+      // withNgxsLoggerPlugin()
     ),
     provideHttpClient(withInterceptorsFromDi()),
   ],

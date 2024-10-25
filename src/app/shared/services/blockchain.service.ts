@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { environment } from '@environments/environment';
 import {
   Networks,
@@ -9,8 +11,6 @@ import {
   TimeoutInfinite,
   Horizon,
 } from '@stellar/stellar-sdk';
-import { Preferences } from '@capacitor/preferences';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +19,13 @@ export class BlockchainService {
   blockchainNetwork = environment.network;
   blockchainType = environment.blockchainType;
   stellarfee = environment.basefee;
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
   private readonly apiUrl = environment.apiUrl;
   constructor() {}
 
   async getObject() {
     const email = (await Preferences.get({ key: 'email' })).value as string;
-    const { value } = await Preferences.get({ key: email });
+    const { value } = await Preferences.get({ key: `keys-of-${email}` });
     if (value) {
       const storedKeypairData = JSON.parse(value);
       const restoredKeypair = Keypair.fromSecret(storedKeypairData.secret);

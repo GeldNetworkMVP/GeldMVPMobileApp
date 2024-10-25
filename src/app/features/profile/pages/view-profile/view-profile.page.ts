@@ -123,8 +123,10 @@ export class ViewProfilePage implements OnInit {
     }
   );
 
+  submitting = signal(false);
   onSubmit() {
     if (this.profileFormGroup.valid) {
+      this.submitting.set(true);
       const formValue = this.profileFormGroup.value;
 
       const currentProfile = this.profile();
@@ -144,9 +146,11 @@ export class ViewProfilePage implements OnInit {
           // encpw: formValue.password as string,
           // username: formValue.username as string,
         };
+        console.log(dto);
 
         this.authenticationService.updateProfile(dto).subscribe({
           next: () => {
+            this.submitting.set(false);
             this.messageService.add({
               severity: 'success',
               summary: 'Success',
@@ -154,6 +158,7 @@ export class ViewProfilePage implements OnInit {
             });
           },
           error: (error) => {
+            this.submitting.set(false);
             console.error(error);
             this.messageService.add({
               severity: 'error',

@@ -8,6 +8,9 @@
   pRipple
   [disabled]="disabled()"
 >
+  @if(loading()) {
+  <iconify-icon icon="svg-spinners:90-ring" class="mr-2" />
+  }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
 } @else {

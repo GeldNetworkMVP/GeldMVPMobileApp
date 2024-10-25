@@ -3,12 +3,12 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpHeaders,
-  HttpResponse,
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
-import { from, lastValueFrom, Observable, switchMap, tap } from 'rxjs';
+import { from, lastValueFrom, map, tap } from 'rxjs';
 
 import { AuthenticationService } from '../services/authentication.service';
 
@@ -17,6 +17,7 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class AuthInterceptor implements HttpInterceptor {
   authenticationService = inject(AuthenticationService);
+  router = inject(Router);
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return from(this.handle(req, next));
@@ -28,7 +29,6 @@ export class AuthInterceptor implements HttpInterceptor {
       '/userexists',
       '/usersignin',
       '/v1/current.json',
-      '/updateuser'
     ]; // URLs to exclude from prefix and token
 
     // if your getAuthToken() function declared as "async getAuthToken() {}"
@@ -55,8 +55,20 @@ export class AuthInterceptor implements HttpInterceptor {
       authReq = authReq.clone({ url: `${origin}/api${pathname}` });
     }
 
-    console.log('authReq', authReq);
-
-    return lastValueFrom(next.handle(authReq));
+    return lastValueFrom(
+      next.handle(authReq).pipe(
+        tap({
+          error: (err) => {
+            if (err instanceof HttpErrorResponse) {
+              const status = err.status;
+              if (status === 401) {
+                this.router.navigate(['/login-or-register']);
+              }
+            }
+          },
+        }),
+        map((req) => req)
+      )
+    ) as Promise<HttpEvent<any>>;
   }
 }

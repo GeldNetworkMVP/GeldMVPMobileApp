@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
+import { Store } from '@ngxs/store';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { MessageService } from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
@@ -11,6 +12,7 @@ import { WithBackButtonLayoutComponent } from '@app/shared/layouts/with-back-but
 
 import { SaveUserDto } from '@features/authentication/dto/save-user.dto';
 import { AuthenticationService } from '@features/authentication/services/authentication.service';
+import { AuthState } from '@features/authentication/stores/auth-store/auth.state';
 
 import { commonModules } from '@shared/common.modules';
 import { ButtonComponent } from '@shared/components/button/button.component';
@@ -40,10 +42,12 @@ import {
 export class RegisterPage implements OnInit {
  authenticationService = inject(AuthenticationService);
   messageService = inject(MessageService);
+  store = inject(Store);
 
   designationOptions = DESIGNATIONS;
 
   pageHeight = signal('');
+ enteredEmail = this.store.selectSignal(AuthState.getLoginEmail)
 
   ngOnInit(): void {
     SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
@@ -68,7 +72,7 @@ export class RegisterPage implements OnInit {
         Validators.required,
         Validators.minLength(1),
       ]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl(this.enteredEmail() ?? '', [Validators.required, Validators.email]),
       contactNumber: this.contactNumberFormGroup,
       designation: new FormControl('', [
         Validators.required,
@@ -88,8 +92,10 @@ export class RegisterPage implements OnInit {
     }
   );
 
+  submitting = signal(false);
   onSubmit() {
     if(this.profileFormGroup.valid) {
+      this.submitting.set(true);
       const formValue = this.profileFormGroup.value;
       const dto: SaveUserDto = {
         contact: `${formValue.contactNumber?.countryCode}${formValue.contactNumber?.number}`,
@@ -101,6 +107,7 @@ export class RegisterPage implements OnInit {
 
       this.authenticationService.registerUser(dto).subscribe({
         next: () => {
+          this.submitting.set(false);
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -108,6 +115,7 @@ export class RegisterPage implements OnInit {
           });
         },
         error: (error) => {
+          this.submitting.set(false);
           console.error(error);
           this.messageService.add({
             severity: 'error',

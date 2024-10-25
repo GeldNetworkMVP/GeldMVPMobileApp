@@ -19,7 +19,7 @@
         }
       </div>
       <footer class="mt-auto">
-        <app-button color="yellow" [block]="true" [disabled]="form.invalid">
+        <app-button color="yellow" [block]="true" [disabled]="form.invalid" [loading]="submitting()">
           {{ form.valid ? 'Continue' : 'Please enter a valid email' }}
         </app-button>
       </footer>

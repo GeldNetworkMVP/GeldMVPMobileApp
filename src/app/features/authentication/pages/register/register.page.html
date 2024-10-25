@@ -92,6 +92,7 @@
             color="yellow"
             [block]="true"
             [disabled]="profileFormGroup.invalid"
+            [loading]="submitting()"
           >
             {{ profileFormGroup.valid ? 'Sign Up' : 'Please fill all the fields'
             }}

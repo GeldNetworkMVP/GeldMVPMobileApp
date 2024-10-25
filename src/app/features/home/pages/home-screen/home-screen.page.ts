@@ -24,15 +24,15 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
 import { timer } from 'rxjs';
+import { Keypair } from 'stellar-sdk';
 
 import { WeatherDisplayComponent } from '@app/features/weather-data/components/weather-display/weather-display.component';
 
+import { AuthenticationService } from '@features/authentication/services/authentication.service';
 import { AuthState } from '@features/authentication/stores/auth-store/auth.state';
 import { SideNavItem } from '@features/home/types/side-nav-item.type';
 
 import { MetadataService } from '@shared/services/metadata.service';
-import { Keypair } from 'stellar-sdk';
-import { AuthenticationService } from '@features/authentication/services/authentication.service';
 
 @Component({
   selector: 'app-home-screen',
@@ -71,20 +71,24 @@ export class HomeScreenPage implements OnInit {
   async ngOnInit(): Promise<void> {
     SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
       this.topHeight.set(statusBarHeight);
-    })
+    });
     const email = (await Preferences.get({ key: 'email' })).value as string;
-    const { value } = await Preferences.get({ key: email });
+    const { value } = await Preferences.get({ key: `keys-of-${email}` });
     if (!value) {
       let keypair = Keypair.random();
-      await this.authenticationService.activateAccount(keypair.publicKey()).subscribe(async res=>{
-        await Preferences.set({
-          key: email,
-          value: JSON.stringify({
+      this.authenticationService
+        .activateAccount(keypair.publicKey())
+        .subscribe(async (res) => {
+          console.log('Account activated: ', res);
+          const value = JSON.stringify({
             publicKey: keypair.publicKey(),
             secret: keypair.secret(),
-          }),
+          });
+          await Preferences.set({
+            key: `keys-of-${email}`,
+            value,
+          });
         });
-      })
     }
     this.metadataService.setMetadata();
   }
