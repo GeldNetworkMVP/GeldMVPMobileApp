@@ -146,6 +146,7 @@ export class ViewProfilePage implements OnInit {
           // encpw: formValue.password as string,
           // username: formValue.username as string,
         };
+        console.log(dto);
 
         this.authenticationService.updateProfile(dto).subscribe({
           next: () => {
