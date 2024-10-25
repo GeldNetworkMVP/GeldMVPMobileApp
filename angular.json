@@ -31,7 +31,12 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/assets/styles/setup.css", "src/assets/styles/global.scss", "src/assets/styles/theme/variables.scss"],
+            "styles": [
+              "node_modules/ngx-countries-dropdown/assets/styles.css",
+              "src/assets/styles/setup.css",
+              "src/assets/styles/global.scss",
+              "src/assets/styles/theme/variables.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -111,7 +116,12 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/assets/styles/setup.css", "src/assets/styles/global.scss", "src/assets/styles/theme/variables.scss"],
+            "styles": [
+              "node_modules/ngx-countries-dropdown/assets/styles.css",
+              "src/assets/styles/setup.css",
+              "src/assets/styles/global.scss",
+              "src/assets/styles/theme/variables.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -124,19 +134,14 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@ionic/angular-toolkit"
-    ]
+    "schematicCollections": ["@ionic/angular-toolkit"]
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {

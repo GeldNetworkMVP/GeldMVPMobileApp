@@ -4,6 +4,33 @@
     urlToGoBack="/data-templates/view"
     [pageTitle]="selectedDataTemplate()?.templatename"
   >
+    <div class="flex items-center justify-between mt-4 mb-6">
+      <div>
+        <h2 class="text-[var(--gray)]">Plot</h2>
+        <p>{{ plotDetails()?.collectionname }}</p>
+      </div>
+
+      <div>
+        <h2 class="text-[var(--gray)]">Workflow</h2>
+        <p>{{ workflowDetails()?.workflowname }}</p>
+      </div>
+
+      <div>
+        <h2 class="text-[var(--gray)]">Stage</h2>
+        <p>{{ stageDetails()?.stagename }}</p>
+      </div>
+    </div>
+    <p-divider />
+    <ul class="flex flex-col gap-6 mt-6">
+      @for (keyValue of keyValues(); track keyValue[0]) {
+      <li class="flex items-center w-full">
+        <span class="text-[var(--gray)] w-1/2">
+          {{ eachWordFirstLetterCapitalized(keyValue[0]) }}</span
+        >
+        <span class="w-1/2"> {{ getTypedValue(keyValue[1]) }} </span>
+      </li>
+      }
+    </ul>
   </app-with-back-button>
 </ion-content>
 }

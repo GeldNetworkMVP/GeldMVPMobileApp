@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
+import { SafeArea } from 'capacitor-plugin-safe-area';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -31,7 +32,7 @@ import { SetNewDataTemplateBasicDetails } from '../../stores/new-data-template-s
     ...commonModules,
   ],
 })
-export class CreateDataTemplateBasicDetailsPage {
+export class CreateDataTemplateBasicDetailsPage implements OnInit {
   private readonly store = inject(Store);
   private readonly router = inject(Router);
 
@@ -45,6 +46,15 @@ export class CreateDataTemplateBasicDetailsPage {
       Validators.required,
     ]),
   });
+
+
+  pageHeight = signal('');
+
+  ngOnInit(): void {
+    SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
+      this.pageHeight.set(`calc(100vh - ${100 + statusBarHeight}px)`);
+    });
+  }
 
   onSubmit() {
     const formData = this.toCreateDataTemplateBasicDetailsFormData(

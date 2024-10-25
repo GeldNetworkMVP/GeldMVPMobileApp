@@ -1,0 +1,29 @@
+<div class="flex flex-col gap-2">
+  <label for="contactNumber">Contact number</label>
+  <div class="flex items-center gap-2">
+    <lib-country-list
+      [preferredCountryCodes]="['uk']"
+      [countryListConfig]="{
+        hideName: true,
+        hideCode: true
+      }"
+      [selectedCountryConfig]="{
+  hideName: true,
+  hideCode: true,
+
+}"
+      (onCountryChange)="onCountryChange($event)"
+    ></lib-country-list>
+
+    <input
+      id="contactNumber"
+      type="tel"
+      pInputText
+      placeholder="Enter your contact number"
+      variant="filled"
+      class="w-full"
+      (change)="onNumberChange($event)"
+      [defaultValue]="form().get('number')?.value"
+    />
+  </div>
+</div>

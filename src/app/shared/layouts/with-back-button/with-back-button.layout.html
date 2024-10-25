@@ -1,4 +1,7 @@
-<header class="flex items-center justify-start pt-4 pb-2 pl-2 pr-4">
+<header
+  class="flex items-center justify-start pb-2 pl-2 pr-4"
+  [style]="{paddingTop: topHeight()+'px'}"
+>
   <button (click)="goBack()">
     <iconify-icon
       icon="lucide:chevron-left"
