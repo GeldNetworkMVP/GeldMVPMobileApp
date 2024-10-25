@@ -47,13 +47,18 @@ export class LoginOrRegisterPage implements OnInit {
     });
   }
 
+  submitting = signal(false);
+
   onSubmit() {
     if (this.form.valid) {
+      this.submitting.set(true);
       const email = this.form.get('email')?.value as string;
       this.authenticationService.doesUserExist(email).subscribe({
         next: (response) => {
+          this.submitting.set(false);
           const op = response.Response.op;
           if (op === 'No record in existence') {
+            this.store.dispatch(new SetLoginEmail(email));
             this.goToRegisterPage();
           } else {
             const status = response.Response.status;
@@ -75,6 +80,7 @@ export class LoginOrRegisterPage implements OnInit {
           }
         },
         error: (error) => {
+          this.submitting.set(false);
           console.error(error);
           this.messageService.add({
             severity: 'error',

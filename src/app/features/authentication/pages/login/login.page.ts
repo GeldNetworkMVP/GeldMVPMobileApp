@@ -54,7 +54,9 @@ export class LoginPage implements OnInit {
     }
   }
 
+  submitting = signal(false);
   onSubmit() {
+    this.submitting.set(true);
     const password = this.form.get('password')?.value;
     const email = this.loginEmail();
 
@@ -64,6 +66,7 @@ export class LoginPage implements OnInit {
         pw: password
       }).subscribe({
         next: () => {
+          this.submitting.set(false);
           this.router.navigate(['/home']);
           this.messageService.add({
             severity: 'success',
@@ -72,6 +75,7 @@ export class LoginPage implements OnInit {
           });
         },
         error: (error) => {
+          this.submitting.set(false);
           console.error(error);
           this.messageService.add({
             severity: 'error',

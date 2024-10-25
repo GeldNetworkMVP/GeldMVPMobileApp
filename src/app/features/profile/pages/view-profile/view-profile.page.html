@@ -92,8 +92,9 @@
             color="yellow"
             [block]="true"
             [disabled]="profileFormGroup.invalid"
+            [loading]="submitting()"
           >
-            {{ profileFormGroup.valid ? 'Sign Up' : 'Please fill all the fields'
+            {{ profileFormGroup.valid ? 'Submit' : 'Please fill all the fields'
             }}
           </app-button>
         </footer>

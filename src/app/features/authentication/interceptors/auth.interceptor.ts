@@ -28,7 +28,6 @@ export class AuthInterceptor implements HttpInterceptor {
       '/userexists',
       '/usersignin',
       '/v1/current.json',
-      '/updateuser'
     ]; // URLs to exclude from prefix and token
 
     // if your getAuthToken() function declared as "async getAuthToken() {}"
@@ -54,8 +53,6 @@ export class AuthInterceptor implements HttpInterceptor {
     if (shouldAddPrefix) {
       authReq = authReq.clone({ url: `${origin}/api${pathname}` });
     }
-
-    console.log('authReq', authReq);
 
     return lastValueFrom(next.handle(authReq));
   }
