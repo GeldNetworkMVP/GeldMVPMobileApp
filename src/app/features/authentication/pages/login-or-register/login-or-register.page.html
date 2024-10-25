@@ -1,0 +1,30 @@
+<ion-content>
+  <app-with-back-button
+    urlToGoBack="/welcome"
+    pageTitle="Sign in or create an account"
+  >
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col mt-8" [style]="{height: pageHeight()}">
+      <div class="flex flex-col gap-2">
+        <label for="email">Enter your email address to continue</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          formControlName="email"
+          placeholder="john.doe@mail.com"
+          variant="filled"
+        />
+        @if(form.get('email')?.invalid && form.get('email')?.touched) {
+        <small class="text-red-500"> Email is required </small>
+        }
+      </div>
+      <footer class="mt-auto">
+        <app-button color="yellow" [block]="true" [disabled]="form.invalid" [loading]="submitting()">
+          {{ form.valid ? 'Continue' : 'Please enter a valid email' }}
+        </app-button>
+      </footer>
+    </form>
+  </app-with-back-button>
+</ion-content>
+
+<p-toast />

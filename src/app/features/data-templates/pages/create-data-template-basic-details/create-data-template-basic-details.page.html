@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true">
   <app-with-back-button urlToGoBack="/home" pageTitle="Create Data Template">
-    <div class="flex flex-col gap-4 h-[calc(100vh-103px)]">
+    <div class="flex flex-col gap-4" [style]="{height: pageHeight()}">
       <p class="mt-4">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
         finibus ullamcorper diam nec iaculis. *Explanation about whats a Data
@@ -39,6 +39,7 @@
             optionLabel="collectionname"
             placeholder="Select Plot"
             variant="filled"
+            appendTo="body"
           />
           @if(createDataTemplateBasicDetailsFormGroup.get('plot')?.invalid &&
           createDataTemplateBasicDetailsFormGroup.get('plot')?.touched) {
@@ -56,6 +57,7 @@
             optionLabel="workflowname"
             placeholder="Select Workflow"
             variant="filled"
+            appendTo="body"
           />
           @if(createDataTemplateBasicDetailsFormGroup.get('workflow')?.invalid
           && createDataTemplateBasicDetailsFormGroup.get('workflow')?.touched) {

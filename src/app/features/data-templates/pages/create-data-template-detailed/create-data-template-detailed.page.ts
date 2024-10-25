@@ -1,4 +1,4 @@
-import { Component, inject, signal, effect } from '@angular/core';
+import { Component, inject, signal, effect, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { IonContent } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
+import { SafeArea } from 'capacitor-plugin-safe-area';
+import config from 'capacitor.config';
 import { MessageService } from 'primeng/api';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,10 +21,13 @@ import { first, firstValueFrom, Subject } from 'rxjs';
 
 import { DataTemplatesService } from '@data-templates/services/data-templates.service';
 
+import { AuthState } from '@features/authentication/stores/auth-store/auth.state';
+
 import { commonModules } from '@shared/common.modules';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { WithBackButtonLayoutComponent } from '@shared/layouts/with-back-button/with-back-button.layout';
 import { ProcessedInputField } from '@shared/models/processed-input-field.model';
+import { BlockchainService } from '@shared/services/blockchain.service';
 import { UtilsService } from '@shared/services/utils.service';
 import {
   inputSelectFieldToProcessedInputField,
@@ -38,8 +43,6 @@ import { StagesService } from '@stages/services/stages.service';
 import { RecordsService } from '@records/services/records.service';
 
 import { NewDataTemplateState } from '../../stores/new-data-template-store/new-data-template.state';
-import { BlockchainService } from '@shared/services/blockchain.service';
-import config from 'capacitor.config';
 
 @Component({
   selector: 'app-create-data-template-detailed',
@@ -59,7 +62,7 @@ import config from 'capacitor.config';
   ],
   providers: [MessageService],
 })
-export class CreateDataTemplateDetailedPage {
+export class CreateDataTemplateDetailedPage implements OnInit {
   private readonly store = inject(Store);
   private readonly router = inject(Router);
   private readonly formBuilder = inject(FormBuilder);
@@ -84,6 +87,7 @@ export class CreateDataTemplateDetailedPage {
   availableStagesToSelect = this.store.selectSignal(
     NewDataTemplateState.getAvailableStagesToSelect
   );
+  profile = this.store.selectSignal(AuthState.getProfile)
 
   destroy$ = new Subject();
 
@@ -97,6 +101,15 @@ export class CreateDataTemplateDetailedPage {
   dynamicFormFields = signal<ProcessedInputField[]>([]);
   selectedStage = signal<StageWithInputFields | null>(null);
   savingTemplate = signal(false);
+
+
+  pageHeight = signal('');
+
+  ngOnInit(): void {
+    SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
+      this.pageHeight.set(`calc(100vh - ${100 + statusBarHeight}px)`);
+    });
+  }
 
   constructor() {
     effect(() => {
@@ -194,7 +207,7 @@ export class CreateDataTemplateDetailedPage {
       },
       prevHash: null, //TODO: Change later
       // currentHash: null, // TODO: Change later
-      userid: '1234', // TODO: Change later
+      userid: this.profile()?.userid,
     };
 
     const formValueHash = await this.utilsService.getObjectHash(formValue);

@@ -1,5 +1,5 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, computed, HostBinding, input, output } from "@angular/core";
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, HostBinding, input, output } from "@angular/core";
 import { RouterLink, UrlTree } from '@angular/router';
 import { RippleModule } from 'primeng/ripple';
 
@@ -8,7 +8,8 @@ import { RippleModule } from 'primeng/ripple';
     standalone: true,
     templateUrl: "./button.component.html",
     styleUrls: ["./button.component.scss"],
-    imports: [RippleModule, NgClass, RouterLink, NgTemplateOutlet]
+    imports: [RippleModule, NgClass, RouterLink, NgTemplateOutlet],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ButtonComponent {
     // props
@@ -17,6 +18,7 @@ export class ButtonComponent {
     block = input<boolean>(false);
     routerLink = input< string | any[] | UrlTree | null | undefined>(undefined)
     disabled = input<boolean>(false);
+    loading = input<boolean>(false);
 
     // computed values
     classes = computed(() => {

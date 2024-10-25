@@ -1,5 +1,6 @@
 import { Record } from '@app/features/records/models/record.model';
 
+import { COUNTRY_CODES } from '../constants/country-codes.constant';
 import {
   InputField,
   SelectInputField,
@@ -68,4 +69,20 @@ export function inputSelectFieldToProcessedInputField(
     label: eachWordsFirstLetterCapitalized(field.valuekey),
     valuekey: field.valuekey,
   };
+}
+
+export function splitToCountryCodeAndNumber(contact: string) {
+  let dialCode = '';
+  let number = contact;
+
+  for (let index = 0; index < COUNTRY_CODES.length; index++) {
+    const countryCode = COUNTRY_CODES[index];
+    if (contact.includes(countryCode)) {
+      dialCode = countryCode;
+      number = contact.slice(countryCode.length);
+      break;
+    }
+  }
+
+  return { dialCode, number };
 }
