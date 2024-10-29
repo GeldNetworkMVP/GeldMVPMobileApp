@@ -6,7 +6,6 @@ import { SafeArea } from 'capacitor-plugin-safe-area';
 import { MessageService } from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { ToastModule } from 'primeng/toast';
 
 import { WithBackButtonLayoutComponent } from '@app/shared/layouts/with-back-button/with-back-button.layout';
 
@@ -36,7 +35,6 @@ import { splitToCountryCodeAndNumber } from '@shared/utils/input-fields.util';
     ButtonComponent,
     DropdownModule,
     IonContent,
-    ToastModule,
     WithBackButtonLayoutComponent,
     InputTextModule,
     CountryCodeInputComponent,
