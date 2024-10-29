@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
+import { ToastModule } from 'primeng/toast';
 
 import { SetProfile } from '@features/authentication/stores/auth-store/auth.actions';
 
@@ -14,7 +15,7 @@ import { setOverlaysWebView } from './shared/utils/set-status-bar-colors.util';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonRouterOutlet, IonApp],
+  imports: [IonRouterOutlet, IonApp, ToastModule],
 })
 export class AppComponent implements OnInit {
   metadataService = inject(MetadataService);

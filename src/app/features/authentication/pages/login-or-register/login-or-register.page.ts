@@ -6,7 +6,6 @@ import { Store } from '@ngxs/store';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
-import { ToastModule } from 'primeng/toast';
 
 import { AuthenticationService } from '@features/authentication/services/authentication.service';
 import { SetLoginEmail } from '@features/authentication/stores/auth-store/auth.actions';
@@ -24,7 +23,6 @@ import { WithBackButtonLayoutComponent } from '@shared/layouts/with-back-button/
     WithBackButtonLayoutComponent,
     IonContent,
     InputTextModule,
-    ToastModule,
     ...commonModules,
   ],
 })
@@ -59,10 +57,15 @@ export class LoginOrRegisterPage implements OnInit {
           const op = response.Response.op;
           if (op === 'No record in existence') {
             this.store.dispatch(new SetLoginEmail(email));
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Info',
+              detail: "let's get you registered",
+            });
             this.goToRegisterPage();
           } else {
             const status = response.Response.status;
-            if (status !== 'Pending') {
+            if (status !== 'pending') {
               this.store.dispatch(new SetLoginEmail(email));
               this.goToLoginPage();
               this.messageService.add({

@@ -1,12 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { MessageService } from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import {ToastModule} from 'primeng/toast'
 
 import { WithBackButtonLayoutComponent } from '@app/shared/layouts/with-back-button/with-back-button.layout';
 
@@ -32,7 +32,6 @@ import {
     ButtonComponent,
     DropdownModule,
     IonContent,
-    ToastModule,
     WithBackButtonLayoutComponent,
     InputTextModule,
     CountryCodeInputComponent,
@@ -40,14 +39,15 @@ import {
   ],
 })
 export class RegisterPage implements OnInit {
- authenticationService = inject(AuthenticationService);
+  authenticationService = inject(AuthenticationService);
   messageService = inject(MessageService);
   store = inject(Store);
+  router = inject(Router);
 
   designationOptions = DESIGNATIONS;
 
   pageHeight = signal('');
- enteredEmail = this.store.selectSignal(AuthState.getLoginEmail)
+  enteredEmail = this.store.selectSignal(AuthState.getLoginEmail);
 
   ngOnInit(): void {
     SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
@@ -72,7 +72,10 @@ export class RegisterPage implements OnInit {
         Validators.required,
         Validators.minLength(1),
       ]),
-      email: new FormControl(this.enteredEmail() ?? '', [Validators.required, Validators.email]),
+      email: new FormControl(this.enteredEmail() ?? '', [
+        Validators.required,
+        Validators.email,
+      ]),
       contactNumber: this.contactNumberFormGroup,
       designation: new FormControl('', [
         Validators.required,
@@ -94,7 +97,7 @@ export class RegisterPage implements OnInit {
 
   submitting = signal(false);
   onSubmit() {
-    if(this.profileFormGroup.valid) {
+    if (this.profileFormGroup.valid) {
       this.submitting.set(true);
       const formValue = this.profileFormGroup.value;
       const dto: SaveUserDto = {
@@ -103,8 +106,8 @@ export class RegisterPage implements OnInit {
         email: formValue.email as string,
         encpw: formValue.password as string,
         username: formValue.username as string,
-        status: "pending"
-      }
+        status: 'pending',
+      };
 
       this.authenticationService.registerUser(dto).subscribe({
         next: () => {
@@ -114,6 +117,7 @@ export class RegisterPage implements OnInit {
             summary: 'Success',
             detail: 'Registered successfully',
           });
+          this.router.navigate(['/welcome']);
         },
         error: (error) => {
           this.submitting.set(false);
@@ -123,9 +127,8 @@ export class RegisterPage implements OnInit {
             summary: 'Error',
             detail: 'Failed to register',
           });
-        }
-      })
+        },
+      });
     }
-
   }
 }
