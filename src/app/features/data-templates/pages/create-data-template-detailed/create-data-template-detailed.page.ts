@@ -102,6 +102,7 @@ export class CreateDataTemplateDetailedPage implements OnInit {
 
 
   pageHeight = signal('');
+  prevHash: any;
 
   ngOnInit(): void {
     SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
@@ -185,6 +186,18 @@ export class CreateDataTemplateDetailedPage implements OnInit {
   }
 
   async onSubmit() {
+
+    this.dataTemplatesService.getLastTemplate(this.basicDetails()?.plot._id).subscribe(async (res:any)=>{
+      if (res!="no template found"){
+        if(res.Response.currentHash!=""){
+          this.prevHash=res.Response.currentHash
+        }else{
+          this.prevHash=""
+        }
+      }else{
+        this.prevHash=""
+      }
+  
     this.savingTemplate.set(true);
     const { coords } = await Geolocation.getCurrentPosition();
 
@@ -203,7 +216,7 @@ export class CreateDataTemplateDetailedPage implements OnInit {
         latitude: coords.latitude,
         longitude: coords.longitude,
       },
-      prevHash: null, //TODO: Change later
+      prevHash: this.prevHash, //TODO: Change later
       // currentHash: null, // TODO: Change later
       userid: this.profile()?.userid,
     };
@@ -259,5 +272,6 @@ export class CreateDataTemplateDetailedPage implements OnInit {
     } catch (error) {
       console.error('Error submitting transaction:', error);
     }
+})
   }
 }
