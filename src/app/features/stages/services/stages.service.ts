@@ -17,4 +17,13 @@ export class StagesService {
       `${this.apiUrl}/stagename/${stageName}`
     );
   }
+
+  getExistingStages(stages: string[]) {
+    return this.http.post<string[]>(
+      `${this.apiUrl}/stage/exists`,
+      {
+        stagearray: stages,
+      }
+    );
+  }
 }
