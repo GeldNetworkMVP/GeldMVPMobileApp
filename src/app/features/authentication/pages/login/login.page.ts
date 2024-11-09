@@ -6,7 +6,6 @@ import { Store } from '@ngxs/store';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
-import {ToastModule} from 'primeng/toast'
 
 import { AuthenticationService } from '@features/authentication/services/authentication.service';
 import { AuthState } from '@features/authentication/stores/auth-store/auth.state';
@@ -24,7 +23,6 @@ import { WithBackButtonLayoutComponent } from '@shared/layouts/with-back-button/
     WithBackButtonLayoutComponent,
     IonContent,
     InputTextModule,
-    ToastModule,
     ...commonModules,
   ],
 })

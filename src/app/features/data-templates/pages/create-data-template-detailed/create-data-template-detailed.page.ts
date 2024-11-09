@@ -16,7 +16,6 @@ import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ToastModule } from 'primeng/toast';
 import { first, firstValueFrom, Subject } from 'rxjs';
 
 import { DataTemplatesService } from '@data-templates/services/data-templates.service';
@@ -55,7 +54,6 @@ import { NewDataTemplateState } from '../../stores/new-data-template-store/new-d
     InputTextModule,
     ButtonComponent,
     IonContent,
-    ToastModule,
     ProgressSpinnerModule,
     WithBackButtonLayoutComponent,
     ...commonModules,

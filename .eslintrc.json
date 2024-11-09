@@ -43,7 +43,7 @@
       "rules": {}
     }
   ],
-  "plugins": ["perfectionist"],
+  "plugins": ["perfectionist", "@stylistic"],
   "rules": {
     "perfectionist/sort-imports": [
       "error",

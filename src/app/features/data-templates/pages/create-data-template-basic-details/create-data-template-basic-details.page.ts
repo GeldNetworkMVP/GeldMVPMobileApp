@@ -6,6 +6,9 @@ import { Store } from '@ngxs/store';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { firstValueFrom } from 'rxjs';
+
+import { StagesService } from '@features/stages/services/stages.service';
 
 import { commonModules } from '@shared/common.modules';
 import { ButtonComponent } from '@shared/components/button/button.component';
@@ -35,6 +38,7 @@ import { SetNewDataTemplateBasicDetails } from '../../stores/new-data-template-s
 export class CreateDataTemplateBasicDetailsPage implements OnInit {
   private readonly store = inject(Store);
   private readonly router = inject(Router);
+  private readonly stagesService = inject(StagesService);
 
   availablePlots = this.store.selectSignal(MetadataState.getAvailablePlots);
   availableWorkflows = this.store.selectSignal(MetadataState.getAvailableWorkflows);
@@ -56,22 +60,26 @@ export class CreateDataTemplateBasicDetailsPage implements OnInit {
     });
   }
 
-  onSubmit() {
-    const formData = this.toCreateDataTemplateBasicDetailsFormData(
+  async onSubmit() {
+    const formData = await this.toCreateDataTemplateBasicDetailsFormData(
       this.createDataTemplateBasicDetailsFormGroup.value
     );
     this.store.dispatch(new SetNewDataTemplateBasicDetails(formData));
     this.router.navigate(['/data-templates/create/detailed']);
   }
 
-  private toCreateDataTemplateBasicDetailsFormData(
+  private async toCreateDataTemplateBasicDetailsFormData(
     value: typeof this.createDataTemplateBasicDetailsFormGroup.value
   ) {
     if (value.dataTemplateName && value.plot && value.workflow) {
+      const workflow = value.workflow;
+      const allStagesInWorkflow = workflow.stages;
+      const existingStages =  await firstValueFrom(this.stagesService.getExistingStages(allStagesInWorkflow))
+      workflow.stages = existingStages;
       return {
         name: value.dataTemplateName,
         plot: value.plot,
-        workflow: value.workflow,
+        workflow: workflow,
       };
     }
     return undefined;
