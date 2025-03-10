@@ -53,12 +53,14 @@ export class BlockchainService {
     timestamp: number,
     geoData: string,
     appID: string
-  ) {
+  ) : Promise<string> {
+    return new Promise(async (resolve, reject) => {
+      try{
     this.getObject().then((res: any) => {
       const appKeyPair = res;
       let sequence;
       let server = new Horizon.Server(this.blockchainNetwork);
-      server.loadAccount(appKeyPair.publicKey()).then((accounts) => {
+      server.loadAccount(appKeyPair.publicKey()).then(async (accounts) => {
         sequence = accounts.sequenceNumber();
 
         let account = new Account(appKeyPair.publicKey(), sequence);
@@ -102,20 +104,18 @@ export class BlockchainService {
 
         transaction.sign(appKeyPair);
 
-        // const server = new Server(this.blockchainNetwork);
-        server
-          .submitTransaction(transaction)
-          .then((result: any) => {
-            console.log('Transaction submitted successfully:', result);
-            const transactionHash = result.hash;
-            return transactionHash;
-          })
-          .catch((error: Error) => {
-            console.error('Error submitting transaction:', error);
-            throw error;
-          });
-      });
-    });
+        const result = await server.submitTransaction(transaction);
+        console.log('Transaction submitted successfully:', result);
+        
+        // Resolving the transaction hash
+        resolve(result.hash);
+      })
+    })
+      } catch (error) {
+        console.error('Error submitting transaction:', error);
+        reject(error); // Reject the promise with the error if submission fails
+      }
+    })
   }
 
   checkBalance(publickey: string) {

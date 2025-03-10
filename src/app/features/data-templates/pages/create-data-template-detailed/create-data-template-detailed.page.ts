@@ -102,6 +102,7 @@ export class CreateDataTemplateDetailedPage implements OnInit {
 
 
   pageHeight = signal('');
+  prevHash: any;
 
   ngOnInit(): void {
     SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
@@ -185,6 +186,18 @@ export class CreateDataTemplateDetailedPage implements OnInit {
   }
 
   async onSubmit() {
+
+    this.dataTemplatesService.getLastTemplate(this.basicDetails()?.plot._id).subscribe(async (res:any)=>{
+      if (res!="no template found"){
+        if(res.Response.currentHash!=""){
+          this.prevHash=res.Response.currentHash
+        }else{
+          this.prevHash=""
+        }
+      }else{
+        this.prevHash=""
+      }
+  
     this.savingTemplate.set(true);
     const { coords } = await Geolocation.getCurrentPosition();
 
@@ -203,19 +216,19 @@ export class CreateDataTemplateDetailedPage implements OnInit {
         latitude: coords.latitude,
         longitude: coords.longitude,
       },
-      prevHash: null, //TODO: Change later
+      prevHash: this.prevHash, //TODO: Change later
       // currentHash: null, // TODO: Change later
       userid: this.profile()?.userid,
     };
 
     const formValueHash = await this.utilsService.getObjectHash(formValue);
     try {
-      const txnHash = await this.blockchainService.xdrBuildForFormSubmission(
+      const txnHash=await this.blockchainService.xdrBuildForFormSubmission(
         this.basicDetails()?.name ?? 'No template name defined',
         this.basicDetails()?.workflow.workflowname ?? 'No workflow defined',
         this.selectedStage()?.stagename ?? 'No Stage defined',
         formValueHash,
-        '',
+        '',//previous hash
         Date.now(),
         coords.latitude + 'and' + coords.longitude,
         config.appId ?? 'No appID defined'
@@ -224,9 +237,8 @@ export class CreateDataTemplateDetailedPage implements OnInit {
       const finalFormValue = {
         ...formValue,
         templateHash: formValueHash,
-        currentHash: txnHash,
+       currentHash: txnHash,
       };
-
       this.dataTemplatesService
         .saveDataTemplate(finalFormValue)
         .pipe(first())
@@ -260,5 +272,6 @@ export class CreateDataTemplateDetailedPage implements OnInit {
     } catch (error) {
       console.error('Error submitting transaction:', error);
     }
+})
   }
 }

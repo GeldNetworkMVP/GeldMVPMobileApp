@@ -76,8 +76,12 @@ export class HomeScreenPage implements OnInit {
     const { value } = await Preferences.get({ key: `keys-of-${email}` });
     if (!value) {
       let keypair = Keypair.random();
+      const obj={
+        "email":email,
+        "publickey":keypair.publicKey()
+      }
       this.authenticationService
-        .activateAccount(keypair.publicKey())
+        .activateAccount(obj)
         .subscribe(async (res) => {
           console.log('Account activated: ', res);
           const value = JSON.stringify({
