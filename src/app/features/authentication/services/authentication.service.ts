@@ -47,9 +47,9 @@ export class AuthenticationService {
       );
   }
 
-  activateAccount(publickey: string) {
-    return this.http.get<string>(
-      `${this.apiUrl}/account/activate/${publickey}`
+  activateAccount(obj:any) {
+    return this.http.post<string>(
+      `${this.apiUrl}/account/activate`,obj
     );
   }
 }

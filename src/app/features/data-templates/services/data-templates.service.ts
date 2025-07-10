@@ -23,4 +23,8 @@ export class DataTemplatesService {
   saveDataTemplate(templateData: any) {
     return this.http.post(`${this.apiUrl}/geldtemplate/save`, templateData);
   }
+
+  getLastTemplate(plotid: any) {
+    return this.http.get(`${this.apiUrl}/lastgeldtemplate/plotid/`+plotid);
+  }
 }

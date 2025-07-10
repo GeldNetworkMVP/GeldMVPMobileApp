@@ -33,7 +33,7 @@ import { AuthState } from '@features/authentication/stores/auth-store/auth.state
 import { SideNavItem } from '@features/home/types/side-nav-item.type';
 
 import { MetadataService } from '@shared/services/metadata.service';
-
+import { ViewWillEnter } from '@ionic/angular';
 @Component({
   selector: 'app-home-screen',
   templateUrl: './home-screen.page.html',
@@ -56,7 +56,7 @@ import { MetadataService } from '@shared/services/metadata.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
 })
-export class HomeScreenPage implements OnInit {
+export class HomeScreenPage implements OnInit, ViewWillEnter {
   authenticationService = inject(AuthenticationService);
   private readonly metadataService = inject(MetadataService);
   private readonly router = inject(Router);
@@ -67,8 +67,12 @@ export class HomeScreenPage implements OnInit {
   topHeight = signal(0);
 
   constructor() {}
+  ionViewWillEnter(): void {
+     this.ngOnInit();
+  }
 
   async ngOnInit(): Promise<void> {
+    
     SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
       this.topHeight.set(statusBarHeight);
     });
@@ -76,8 +80,12 @@ export class HomeScreenPage implements OnInit {
     const { value } = await Preferences.get({ key: `keys-of-${email}` });
     if (!value) {
       let keypair = Keypair.random();
+      const obj={
+        "email":email,
+        "publickey":keypair.publicKey()
+      }
       this.authenticationService
-        .activateAccount(keypair.publicKey())
+        .activateAccount(obj)
         .subscribe(async (res) => {
           console.log('Account activated: ', res);
           const value = JSON.stringify({
