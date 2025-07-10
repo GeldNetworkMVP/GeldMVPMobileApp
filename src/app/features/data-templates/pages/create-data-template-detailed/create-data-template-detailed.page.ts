@@ -228,7 +228,7 @@ export class CreateDataTemplateDetailedPage implements OnInit {
         this.basicDetails()?.workflow.workflowname ?? 'No workflow defined',
         this.selectedStage()?.stagename ?? 'No Stage defined',
         formValueHash,
-        '',//previous hash
+        this.prevHash,//previous hash
         Date.now(),
         coords.latitude + 'and' + coords.longitude,
         config.appId ?? 'No appID defined'

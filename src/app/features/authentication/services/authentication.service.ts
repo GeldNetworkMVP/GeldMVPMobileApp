@@ -48,7 +48,7 @@ export class AuthenticationService {
   }
 
   activateAccount(obj:any) {
-    return this.http.get<string>(
+    return this.http.post<string>(
       `${this.apiUrl}/account/activate`,obj
     );
   }

@@ -120,7 +120,7 @@ export class BlockchainService {
 
   checkBalance(publickey: string) {
     return this.http.get<string>(
-      `${this.apiUrl}/account/activate/${publickey}`
+      `${this.apiUrl}/account/balance/${publickey}`
     );
   }
 }

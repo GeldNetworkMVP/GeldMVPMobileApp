@@ -13,6 +13,8 @@ import { AuthState } from '@features/authentication/stores/auth-store/auth.state
 import { commonModules } from '@shared/common.modules';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { WithBackButtonLayoutComponent } from '@shared/layouts/with-back-button/with-back-button.layout';
+import { Preferences } from '@capacitor/preferences';
+import { Keypair } from 'stellar-sdk';
 
 @Component({
   standalone: true,
@@ -63,7 +65,7 @@ export class LoginPage implements OnInit {
         email,
         pw: password
       }).subscribe({
-        next: () => {
+        next: async () => {
           this.submitting.set(false);
           this.router.navigate(['/home']);
           this.messageService.add({
