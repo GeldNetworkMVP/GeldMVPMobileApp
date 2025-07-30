@@ -60,11 +60,17 @@ export class ViewProfilePage implements OnInit {
 
   initFormFromProfileData() {
     const currentProfile = this.profile();
-    if (currentProfile) {
-      const currentEmail = currentProfile.email;
-      const currentContact = currentProfile.contact;
-      const currentDesignation = currentProfile.designation;
-      // console.log(currentEmail, currentContact, currentDesignation);
+    console.log("current profile id ",currentProfile?.userid)
+
+    if (currentProfile?.userid) {
+      this.authenticationService.getUserProfileDetails(currentProfile?.userid).subscribe((res:any)=>{
+        console.log("response ",res)
+        
+     
+      const currentEmail =currentProfile.email ;
+      const currentContact = res.Response.contact;
+      const currentDesignation = res.Response.designation;
+      console.log(currentEmail, currentContact, currentDesignation);
 
       const { dialCode, number } = splitToCountryCodeAndNumber(
         currentContact as string
@@ -74,14 +80,15 @@ export class ViewProfilePage implements OnInit {
 
       this.profileFormGroup.patchValue({
         email: currentProfile.email,
-        designation: currentProfile.designation,
+        designation: currentDesignation,
       });
 
       this.contactNumberFormGroup.get('countryCode')?.setValue(dialCode);
       this.contactNumberFormGroup.get('number')?.setValue(number);
 
       console.log(this.contactNumberFormGroup.value);
-    }
+    })
+  }
   }
 
   contactNumberFormGroup = new FormGroup({
@@ -141,6 +148,7 @@ export class ViewProfilePage implements OnInit {
           contact: `${countryCode}${formValue.contactNumber?.number}`,
           designation: formValue.designation as string,
           email: formValue.email as string,
+          status:"accepted",
           // encpw: formValue.password as string,
           // username: formValue.username as string,
         };

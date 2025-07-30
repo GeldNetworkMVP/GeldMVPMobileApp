@@ -58,6 +58,8 @@ export class BlockchainService {
       try{
     this.getObject().then((res: any) => {
       const appKeyPair = res;
+      this.checkBalance(appKeyPair.publicKey()).subscribe((res:any)=>{
+        console.log("result after checking balance ",res)
       let sequence;
       let server = new Horizon.Server(this.blockchainNetwork);
       server.loadAccount(appKeyPair.publicKey()).then(async (accounts) => {
@@ -110,6 +112,7 @@ export class BlockchainService {
         // Resolving the transaction hash
         resolve(result.hash);
       })
+    })
     })
       } catch (error) {
         console.error('Error submitting transaction:', error);
